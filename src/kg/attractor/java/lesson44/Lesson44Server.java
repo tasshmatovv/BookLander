@@ -5,6 +5,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
+import kg.attractor.java.dataModels.BookDataModel;
+import kg.attractor.java.dataModels.EmployeeDataModel;
 import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.ResponseCodes;
@@ -17,6 +19,10 @@ public class Lesson44Server extends BasicServer {
     public Lesson44Server(String host, int port) throws IOException {
         super(host, port);
         registerGet("/sample", this::freemarkerSampleHandler);
+        registerGet("/book", this::freemarkerBookHandler);
+        registerGet("/books", this::freemarkerBooksHandler);
+        registerGet("/employee", this::freemarkerEmployeeHandler);
+        registerGet("/employees", this::freemarkerEmployeesHandler);
     }
 
     private static Configuration initFreeMarker() {
@@ -79,5 +85,31 @@ public class Lesson44Server extends BasicServer {
         // возвращаем экземпляр тестовой модели-данных
         // которую freemarker будет использовать для наполнения шаблона
         return new SampleDataModel();
+    }
+
+    private void freemarkerBookHandler(HttpExchange exchange)
+    {
+        renderTemplate(exchange,"book.ftlh", new BookDataModel());
+    }
+
+    private void freemarkerBooksHandler(HttpExchange exchange)
+    {
+        renderTemplate(exchange,"books.ftlh", new BookDataModel());
+    }
+
+    private void freemarkerEmployeeHandler(HttpExchange exchange){
+        renderTemplate(exchange , "employee.ftlh", new EmployeeDataModel() );
+    }
+
+    private void freemarkerEmployeesHandler(HttpExchange exchange){
+        renderTemplate(exchange , "employees.ftlh", new EmployeeDataModel() );
+    }
+
+    private BookDataModel getBookDataModel(){
+        return new BookDataModel();
+    }
+
+    private EmployeeDataModel getEmployeeDataModel(){
+        return new EmployeeDataModel();
     }
 }
