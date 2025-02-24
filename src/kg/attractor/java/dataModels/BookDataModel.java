@@ -10,9 +10,9 @@ public class BookDataModel {
     public BookDataModel() {
         books.add(book);
         books.add(new Book(2, "Sherlock Holmes", "Arthur Conan Doyle", "Busy"));
-        books.add(new Book(3, "Manas", "folk art", "Free"));
-        books.add(new Book(4, "Ak-Keme", "Chyngyz Aitmatov", "Free"));
-        books.add(new Book(5, "Akbara's tears", "Chyngyz Aitmatov", "Busy"));
+        books.add(new Book(3, "1984", "George Orwell", "Free"));
+        books.add(new Book(4, "The Invisible Man", "Ralph Ellison", "Free"));
+        books.add(new Book(5, "Gone with the Wind", "Margaret Mitchell", "Busy"));
     }
 
     public void addBook(Book book) {
