@@ -48,7 +48,7 @@
         <div class="col-md-4">
             <div class="book-card">
                 <img src="book-placeholder.jpg" alt="${book.name}">
-                <h5>${book.name}</h5>
+                <h5><a href="/book">${book.name}</a></h5>
                 <p>Author: ${book.author}</p>
                 <p class="text-primary">${book.status}</p>
             </div>
