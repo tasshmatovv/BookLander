@@ -45,6 +45,5 @@
         </div>
     </#list>
 </div>
-</div>
 </body>
 </html>

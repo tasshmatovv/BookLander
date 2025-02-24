@@ -55,8 +55,5 @@
         </div>
     </#list>
 </div>
-</div>
-
-</div>
 </body>
 </html>
