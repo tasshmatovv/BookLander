@@ -5,8 +5,8 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
-import kg.attractor.java.dataModels.BookDataModel;
-import kg.attractor.java.dataModels.EmployeeDataModel;
+import kg.attractor.java.dataModels.BookService;
+import kg.attractor.java.dataModels.EmployeeService;
 import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.ResponseCodes;
@@ -31,7 +31,7 @@ public class Lesson44Server extends BasicServer {
             // путь к каталогу в котором у нас хранятся шаблоны
             // это может быть совершенно другой путь, чем тот, откуда сервер берёт файлы
             // которые отправляет пользователю
-            cfg.setDirectoryForTemplateLoading(new File("data"));
+            cfg.setDirectoryForTemplateLoading(new File("data/templates"));
 
             // прочие стандартные настройки о них читать тут
             // https://freemarker.apache.org/docs/pgui_quickstart_createconfiguration.html
@@ -89,27 +89,27 @@ public class Lesson44Server extends BasicServer {
 
     private void freemarkerBookHandler(HttpExchange exchange)
     {
-        renderTemplate(exchange,"book.ftlh", new BookDataModel());
+        renderTemplate(exchange,"book.ftlh", new BookService());
     }
 
     private void freemarkerBooksHandler(HttpExchange exchange)
     {
-        renderTemplate(exchange,"books.ftlh", new BookDataModel());
+        renderTemplate(exchange,"books.ftlh", new BookService());
     }
 
     private void freemarkerEmployeeHandler(HttpExchange exchange){
-        renderTemplate(exchange , "employee.ftlh", new EmployeeDataModel() );
+        renderTemplate(exchange , "employee.ftlh", new EmployeeService() );
     }
 
     private void freemarkerEmployeesHandler(HttpExchange exchange){
-        renderTemplate(exchange , "employees.ftlh", new EmployeeDataModel() );
+        renderTemplate(exchange , "employees.ftlh", new EmployeeService() );
     }
 
-    private BookDataModel getBookDataModel(){
-        return new BookDataModel();
+    private BookService getBookDataModel(){
+        return new BookService();
     }
 
-    private EmployeeDataModel getEmployeeDataModel(){
-        return new EmployeeDataModel();
+    private EmployeeService getEmployeeDataModel(){
+        return new EmployeeService();
     }
 }
