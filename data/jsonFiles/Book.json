@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "name": "Harry Potter",
+    "author": "Joanne Rowling",
+    "status": "Free"
+  },
+  {
+    "id": 2,
+    "name": "Sherlock Holmes",
+    "author": "Arthur Conan Doyle",
+    "status": "Busy"
+  },
+  {
+    "id": 3,
+    "name": "1984",
+    "author": "George Orwell",
+    "status": "Free"
+  },
+  {
+    "id": 4,
+    "name": "The Invisible Man",
+    "author": "Ralph Ellison",
+    "status": "Free"
+  },
+  {
+    "id": 5,
+    "name": "Gone with the Wind",
+    "author": "Margaret Mitchell",
+    "status": "Busy"
+  }
+]

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "full name": "Дмитрий Сергеевич",
+    "listCurrentBooks": 10,
+    "listPastBooks": 5
+  },
+  {
+    "id": 2,
+    "name": "Василий Георгеевич",
+    "listCurrentBooks": 9,
+    "listPastBooks": 4
+  },
+  {
+    "id": 3,
+    "name": "Иванов Иван",
+    "listCurrentBooks": 8,
+    "listPastBooks": 3
+  },
+  {
+    "id": 4,
+    "name": "Петров Петр",
+    "listCurrentBooks": 7,
+    "listPastBooks": 2
+  }
+]

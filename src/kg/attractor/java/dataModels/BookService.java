@@ -3,17 +3,9 @@ package kg.attractor.java.dataModels;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDataModel {
+public class BookService {
     Book book = new Book(1,"Harry Potter", "Joanne Rowling" ,"Free");
     List <Book> books = new ArrayList<>();
-
-    public BookDataModel() {
-        books.add(book);
-        books.add(new Book(2, "Sherlock Holmes", "Arthur Conan Doyle", "Busy"));
-        books.add(new Book(3, "1984", "George Orwell", "Free"));
-        books.add(new Book(4, "The Invisible Man", "Ralph Ellison", "Free"));
-        books.add(new Book(5, "Gone with the Wind", "Margaret Mitchell", "Busy"));
-    }
 
     public void addBook(Book book) {
         books.add(book);
