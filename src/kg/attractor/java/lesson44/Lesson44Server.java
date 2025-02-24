@@ -19,10 +19,7 @@ public class Lesson44Server extends BasicServer {
     public Lesson44Server(String host, int port) throws IOException {
         super(host, port);
         registerGet("/sample", this::freemarkerSampleHandler);
-        registerGet("/book", this::freemarkerBookHandler);
-        registerGet("/books", this::freemarkerBooksHandler);
-        registerGet("/employee", this::freemarkerEmployeeHandler);
-        registerGet("/employees", this::freemarkerEmployeesHandler);
+
     }
 
     private static Configuration initFreeMarker() {
@@ -87,29 +84,6 @@ public class Lesson44Server extends BasicServer {
         return new SampleDataModel();
     }
 
-    private void freemarkerBookHandler(HttpExchange exchange)
-    {
-        renderTemplate(exchange,"book.ftlh", new BookService());
-    }
 
-    private void freemarkerBooksHandler(HttpExchange exchange)
-    {
-        renderTemplate(exchange,"books.ftlh", new BookService());
-    }
 
-    private void freemarkerEmployeeHandler(HttpExchange exchange){
-        renderTemplate(exchange , "employee.ftlh", new EmployeeService() );
-    }
-
-    private void freemarkerEmployeesHandler(HttpExchange exchange){
-        renderTemplate(exchange , "employees.ftlh", new EmployeeService() );
-    }
-
-    private BookService getBookDataModel(){
-        return new BookService();
-    }
-
-    private EmployeeService getEmployeeDataModel(){
-        return new EmployeeService();
-    }
 }
