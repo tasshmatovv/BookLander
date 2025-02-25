@@ -2,25 +2,25 @@
   {
     "id": 1,
     "fullName": "Дмитрий Сергеевич",
-    "listCurrentBooks": 10,
-    "listPastBooks": 5
+    "listCurrentBooks": 5,
+    "listPastBooks": 1
   },
   {
     "id": 2,
     "fullName": "Василий Георгеевич",
-    "listCurrentBooks": 9,
-    "listPastBooks": 4
+    "listCurrentBooks": 4,
+    "listPastBooks": 2
   },
   {
     "id": 3,
     "fullName": "Иванов Иван",
-    "listCurrentBooks": 8,
-    "listPastBooks": 3
+    "listCurrentBooks": 3,
+    "listPastBooks": 1
   },
   {
     "id": 4,
     "fullName": "Петров Петр",
-    "listCurrentBooks": 7,
-    "listPastBooks": 2
+    "listCurrentBooks": 2,
+    "listPastBooks": 5
   }
 ]
