@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BookService {
-    Book book = new Book(1,"Harry Potter", "Joanne Rowling" ,"Free");
+    Book book = new Book(1,"Harry Potter", "Joanne Rowling" ,"Free", "/images/9781408855669-6cfb2099b6e84a4899ce368d6facc242.jpg");
     List <Book> books = new ArrayList<>();
 
     public void addBook(Book book) {

@@ -5,12 +5,14 @@ public class Book {
     private String name;
     private String author;
     private String status;
+    private String cover;
 
-    public Book(int id, String name, String author, String status) {
+    public Book(int id, String name, String author, String status, String cover) {
         this.id = id;
         this.name = name;
         this.author = author;
         this.status = status;
+        this.cover = cover;
 
     }
 
@@ -34,5 +36,11 @@ public class Book {
         this.status = status;
     }
 
+    public String getCover() {
+        return cover;
+    }
 
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
 }
