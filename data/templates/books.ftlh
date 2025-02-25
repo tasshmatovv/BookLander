@@ -18,17 +18,19 @@
         .book-section {
             padding: 40px 20px;
         }
-        .book-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            text-align: center;
-        }
-        .book-card img {
-            max-width: 100%;
-            border-radius: 5px;
-        }
+       .book-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.book-card img {
+    width: 100%;
+    height: 500px;
+}
+
         .author-section {
             text-align: center;
             padding: 50px 20px;
@@ -47,7 +49,7 @@
         <#list books as book>
         <div class="col-md-4">
             <div class="book-card">
-                <img src="book-placeholder.jpg" alt="${book.name}">
+                <img src="${book.cover}" alt="${book.name}" class="book-cover">
                 <h5><a href="/book">${book.name}</a></h5>
                 <p>Author: ${book.author}</p>
                 <p class="text-primary">${book.status}</p>

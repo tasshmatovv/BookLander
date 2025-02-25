@@ -39,7 +39,7 @@
     <div class="list-group">
         <#list employees as employee>
         <div class="employee-card">
-            <p><strong>ФИО:</strong> ${employee.fullName}</p>
+            <p><a href="/employee"><strong>ФИО:</strong> ${employee.fullName}</a></p>
             <p><strong>Текущие книги:</strong> ${employee.listCurrentBooks}</p>
             <p><strong>Прошлые книги:</strong> ${employee.listPastBooks}</p>
         </div>

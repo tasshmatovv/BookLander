@@ -38,6 +38,7 @@
         <p class="info-item"><strong>Name:</strong>${employee.fullName}</p>
         <p class="info-item"><strong>Current Books:</strong>${employee.listCurrentBooks}</p>
         <p class="info-item"><strong>Past Books:</strong>${employee.listPastBooks}</p>
+        <a href="/employees" class="btn btn-custom mt-3">Назад</a>
     </div>
 </div>
 </body>

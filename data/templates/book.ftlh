@@ -28,6 +28,7 @@
             color: #fff;
             border-radius: 20px;
             padding: 10px 20px;
+            text-decoration: none;
         }
         .btn-custom:hover {
             background-color: #333;
@@ -36,10 +37,11 @@
 </head>
 <body>
 <div class="container d-flex flex-column align-items-center text-center">
-    <img src="book-cover.jpg" alt="Обложка книги" class="book-cover mb-3">
+    <img src="${book.cover}" alt="${book.name}" class="book-cover">
     <h2 class="mb-3">${book.name}</h2>
     <p class="text-muted">${book.author}</p>
     <hr class="w-100 mt-4">
+    <a href="/books" class="btn btn-custom mt-3">Назад</a>
 </div>
 </body>
 </html>
