@@ -3,30 +3,35 @@
     "id": 1,
     "name": "Harry Potter",
     "author": "Joanne Rowling",
-    "status": "Free"
+    "status": "Free",
+    "cover":"/images/9781408855669-6cfb2099b6e84a4899ce368d6facc242.jpg"
   },
   {
     "id": 2,
     "name": "Sherlock Holmes",
     "author": "Arthur Conan Doyle",
-    "status": "Busy"
+    "status": "Busy",
+    "cover": "/images/Adventures_of_sherlock_holmes.jpg"
   },
   {
     "id": 3,
     "name": "1984",
     "author": "George Orwell",
-    "status": "Free"
+    "status": "Free",
+    "cover": "/images/images.jpg"
   },
   {
     "id": 4,
     "name": "The Invisible Man",
     "author": "Ralph Ellison",
-    "status": "Free"
+    "status": "Free",
+    "cover": "/images/9780451531674.jpg"
   },
   {
     "id": 5,
     "name": "Gone with the Wind",
     "author": "Margaret Mitchell",
-    "status": "Busy"
+    "status": "Busy",
+    "cover": "/images/18405.jpg"
   }
 ]
