@@ -3,12 +3,19 @@ package kg.attractor.java.server;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public abstract class BasicServer {
 
@@ -127,5 +134,55 @@ public abstract class BasicServer {
 
     public final void start() {
         server.start();
+    }
+
+    protected void redirect303(HttpExchange exchange, String location) {
+        try {
+            exchange.getResponseHeaders().add("Location", location);
+            exchange.sendResponseHeaders(303, 0L);
+            exchange.getResponseBody().close();
+        } catch (IOException var4) {
+            IOException e = var4;
+            e.printStackTrace();
+        }
+
+    }
+
+    protected void registerPost(String route, RouteHandler handler) {
+        this.getRoutes().put("POST " + route, handler);
+    }
+
+    public static String getContentType(HttpExchange exchange) {
+        return (String)((List)exchange.getRequestHeaders().getOrDefault("Content-Type", List.of(""))).get(0);
+    }
+
+    protected String getBody(HttpExchange exchange) {
+        InputStream input = exchange.getRequestBody();
+        Charset utf8 = StandardCharsets.UTF_8;
+        InputStreamReader isr = new InputStreamReader(input, utf8);
+
+        try {
+            BufferedReader reader = new BufferedReader(isr);
+
+            String var6;
+            try {
+                var6 = (String)reader.lines().collect(Collectors.joining(""));
+            } catch (Throwable var9) {
+                try {
+                    reader.close();
+                } catch (Throwable var8) {
+                    var9.addSuppressed(var8);
+                }
+
+                throw var9;
+            }
+
+            reader.close();
+            return var6;
+        } catch (IOException var10) {
+            IOException e = var10;
+            e.printStackTrace();
+            return "";
+        }
     }
 }
