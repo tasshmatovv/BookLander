@@ -78,8 +78,11 @@ public class AuthHandler extends Handler  {
     private String getUserEmailFromSession(HttpExchange exchange) {
         List<String> cookies = exchange.getRequestHeaders().getOrDefault("Cookie", Collections.emptyList());
         for (String cookie : cookies) {
-            if (cookie.contains("session=")) {
-                return cookie.substring(cookie.indexOf("=") + 1);
+            String[] parts = cookie.split("; ");
+            for (String part : parts) {
+                if (part.startsWith("session=")) {
+                    return part.substring("session=".length());
+                }
             }
         }
         return null;
