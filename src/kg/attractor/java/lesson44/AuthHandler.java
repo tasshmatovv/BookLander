@@ -19,6 +19,7 @@ public class AuthHandler extends Handler  {
         registerPost("/login", this::loginPost);
         registerGet("/profile", this::profileGet);
         registerGet("/loginFailed", this::loginFailedGet);
+        registerGet("/register", this::registerGet);
     }
 
     private void loginGet(HttpExchange exchange) {
@@ -40,10 +41,6 @@ public class AuthHandler extends Handler  {
         } else {
             redirect303(exchange, "/profile");
         }
-    }
-
-    private void profilePost(HttpExchange exchange) {
-        redirect303(exchange, "data/templates/profile.ftlh");
     }
 
     private void loginPost(HttpExchange exchange) {
@@ -86,6 +83,11 @@ public class AuthHandler extends Handler  {
             }
         }
         return null;
+    }
+
+    private void registerGet(HttpExchange exchange) {
+        Path path =  makeFilePath("templates/register.ftlh");
+        sendFile(exchange,path,ContentType.TEXT_HTML);
     }
 
 }
