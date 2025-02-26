@@ -19,22 +19,23 @@
             padding: 40px 20px;
         }
        .book-card {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.book-card img {
-    width: 100%;
-    height: 500px;
-}
-
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+        }
+        .book-card img {
+            width: 100%;
+            height: 500px;
+        }
         .author-section {
             text-align: center;
             padding: 50px 20px;
             background: #fff;
+        }
+        .nav-item{
+            margin-right:10px
         }
     </style>
 </head>
@@ -56,7 +57,10 @@
                     <a class="nav-link" href="/books">Книги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="#">Login</a>
+                    <a class="nav-link btn btn-primary text-white" href="/login">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="/register">Регистрация</a>
                 </li>
             </ul>
         </div>

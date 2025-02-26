@@ -31,6 +31,9 @@
         .employee-card h5 {
             margin-bottom: 10px;
         }
+        .nav-item{
+            margin-right:10px
+        }
     </style>
 </head>
 <body>
@@ -50,7 +53,10 @@
                     <a class="nav-link" href="/books">Книги</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="#">Login</a>
+                    <a class="nav-link btn btn-primary text-white" href="/login">Войти</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link btn btn-primary text-white" href="/register">Регистрация</a>
                 </li>
             </ul>
         </div>
