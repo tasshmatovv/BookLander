@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeService {
-    Employee employee =  new Employee(1, "Дмитрий Сергеевич", 1, 5);
+    Employee employee =  new Employee(1, "Дмитрий Сергеевич", 1, 5, "q@q.q", "qweqwe");
     List<Employee> employees = new ArrayList<>();
 
     public void addEmployee(Employee employee){
