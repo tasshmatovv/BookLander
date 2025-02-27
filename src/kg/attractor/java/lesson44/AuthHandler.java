@@ -4,6 +4,7 @@ import com.google.gson.reflect.TypeToken;
 import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 
+import kg.attractor.java.dataModels.Employee;
 import kg.attractor.java.server.ContentType;
 
 import java.io.IOException;
@@ -21,6 +22,7 @@ public class AuthHandler extends Handler  {
         registerGet("/profile", this::profileGet);
         registerGet("/loginFailed", this::loginFailedGet);
         registerGet("/register", this::registerGet);
+        registerPost("/register", this::registerPost);
     }
 
     private void loginGet(HttpExchange exchange) {
@@ -40,7 +42,7 @@ public class AuthHandler extends Handler  {
             dataModel.put("email", userEmail);
             renderTemplate(exchange, "/profile.ftlh", dataModel);
         } else {
-            redirect303(exchange, "/profile");
+            redirect303(exchange, "/login");
         }
     }
 
@@ -91,4 +93,41 @@ public class AuthHandler extends Handler  {
         sendFile(exchange,path,ContentType.TEXT_HTML);
     }
 
+    private void registerPost(HttpExchange exchange) {
+        String requestBody = getBody(exchange);
+        Map<String, String> formData = Utils.parseUrlEncoded(requestBody, "&");
+
+        String fullName = formData.getOrDefault("fullName", "");
+        String email = formData.getOrDefault("email", "");
+        String password = formData.getOrDefault("password", "");
+
+        if (isUserExists(email)) {
+            redirect303(exchange, "/registerFailed");
+        } else {
+            saveUser(email, fullName, password);
+            redirect303(exchange, "/profile");
+        }
+    }
+
+    private boolean isUserExists(String email) {
+        Type userListType = new TypeToken<List<Map<String, String>>>() {}.getType();
+        List<Map<String, String>> users = Utils.readFile("data/jsonFiles/Employee.json", userListType);
+        if (users == null) {
+            return false;
+        }
+        return users.stream()
+                .anyMatch(user -> user.get("email").equals(email));
+    }
+
+    public static void saveUser(String email, String fullName, String password) {
+        Type userListType = new TypeToken<List<Employee>>() {}.getType();
+        List<Employee> users = Utils.readFile(FILE_PATH, userListType);
+        if (users == null) {
+            users = new ArrayList<>();
+        }
+        int newId = users.stream().mapToInt(Employee::getId).max().orElse(0) + 1;
+        Employee newUser = new Employee(newId, fullName, 0, 0, email, password);
+        users.add(newUser);
+        Utils.writeFile(FILE_PATH, users);
+    }
 }
