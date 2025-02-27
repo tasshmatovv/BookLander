@@ -1,6 +1,8 @@
 package kg.attractor.java.common;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
@@ -16,6 +18,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Utils {
+    private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
     public static <T> List<T> readFile(String location,Type itemsListType){
         Path path = Path.of(location);
 
@@ -49,4 +53,12 @@ public class Utils {
         }
     }
 
+    public static <T> void writeFile(String filePath, List<T> data) {
+        try (FileWriter writer = new FileWriter(filePath, StandardCharsets.UTF_8, false)) {
+            GSON.toJson(data, writer);
+            writer.flush();
+        } catch (IOException e) {
+            System.err.println("Ошибка при записи в файл: " + e.getMessage());
+        }
+    }
 }
