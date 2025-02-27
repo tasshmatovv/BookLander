@@ -12,6 +12,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 public class AuthHandler extends Handler  {
+    private static final String FILE_PATH = "data/jsonFiles/Employee.json";
 
     public AuthHandler(String host, int port) throws IOException {
         super(host, port);
