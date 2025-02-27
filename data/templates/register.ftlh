@@ -88,10 +88,10 @@
 <div class="container">
     <h2>Регистрация</h2>
 
-    <form>
-        <div class="input-group">
-            <label for="name">Имя</label>
-            <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+    <form action="/register" method="post">
+    <div class="input-group">
+            <label for="fullName">Имя</label>
+            <input type="text" id="fullName" name="fullName" placeholder="Введите ваше имя" required>
         </div>
 
         <div class="input-group">
