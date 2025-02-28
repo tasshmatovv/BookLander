@@ -115,7 +115,7 @@ public class AuthHandler extends Handler  {
             redirect303(exchange, "/registerFailed");
         } else {
             saveUser(email, fullName, password);
-            redirect303(exchange, "/profile");
+            redirect303(exchange, "/login");
         }
     }
 
