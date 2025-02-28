@@ -44,6 +44,16 @@
             padding: 20px;
             margin-bottom: 20px;
         }
+         .employee-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .employee-link:hover {
+            color: green;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -70,7 +80,7 @@
     <div class="list-group">
         <#list employees as employee>
         <div class="card">
-            <p><a href="/employee"><strong>ФИО:</strong> ${employee.fullName}</a></p>
+            <p><a href="/employee" class="employee-link"><strong>ФИО:</strong> ${employee.fullName}</a></p>
             <p><strong>Текущие книги:</strong> ${employee.listCurrentBooks}</p>
             <p><strong>Прошлые книги:</strong> ${employee.listPastBooks}</p>
         </div>

@@ -58,6 +58,17 @@
         .btn-custom:hover {
             background-color: #ccc;
         }
+        .book-link {
+            color: black;
+            text-decoration: none;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .book-link:hover {
+            color: green;
+            text-decoration: none;
+        }
+
     </style>
 </head>
 <body>
@@ -90,7 +101,7 @@
         <div class="col-md-4">
             <div class="card">
                 <img src="${book.cover}" alt="${book.name}">
-                <h5><a href="/book">${book.name}</a></h5>
+                <h5><a href="/book" class="book-link">${book.name}</a></h5>
                 <p>Автор: ${book.author}</p>
                 <p class="text-primary">${book.status}</p>
             </div>
