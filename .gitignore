@@ -1,4 +1,4 @@
 /.idea/
 /out/
-/coverage-error.log
-.*iml
+/coverage-error
+*.iml
