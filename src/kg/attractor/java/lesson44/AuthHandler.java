@@ -17,18 +17,12 @@ public class AuthHandler extends Handler  {
 
     public AuthHandler(String host, int port) throws IOException {
         super(host, port);
-        registerGet("/login", this::loginGet);
         registerPost("/login", this::loginPost);
         registerGet("/profile", this::profileGet);
         registerGet("/loginFailed", this::loginFailedGet);
         registerGet("/register", this::registerGet);
         registerPost("/register", this::registerPost);
         registerGet("/registerFailed", this::registerFailedGet);
-    }
-
-    private void loginGet(HttpExchange exchange) {
-        Path path = makeFilePath("index.html");
-        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
     private void loginFailedGet(HttpExchange exchange) {
