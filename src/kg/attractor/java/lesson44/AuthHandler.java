@@ -23,6 +23,7 @@ public class AuthHandler extends Handler  {
         registerGet("/loginFailed", this::loginFailedGet);
         registerGet("/register", this::registerGet);
         registerPost("/register", this::registerPost);
+        registerGet("/registerFailed", this::registerFailedGet);
     }
 
     private void loginGet(HttpExchange exchange) {
@@ -129,5 +130,13 @@ public class AuthHandler extends Handler  {
         Employee newUser = new Employee(newId, fullName, 0, 0, email, password);
         users.add(newUser);
         Utils.writeFile(FILE_PATH, users);
+        if (Handler.employees != null) {
+            Handler.employees.add(newUser);
+        }
+    }
+
+    private void registerFailedGet(HttpExchange exchange) {
+        Path path = makeFilePath("templates/registerFailed.ftlh");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 }

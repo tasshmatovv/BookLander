@@ -15,7 +15,7 @@ import java.util.Map;
 public class Handler extends Lesson44Server{
 
     private List<Book> books;
-    private List<Employee> employees;
+    protected static List<Employee> employees;
 
     public Handler(String host, int port) throws IOException {
         super(host, port);
