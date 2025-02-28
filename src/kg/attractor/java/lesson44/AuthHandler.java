@@ -51,8 +51,13 @@ public class AuthHandler extends Handler  {
         String requestBody = getBody(exchange);
         Map<String, String> formData = Utils.parseUrlEncoded(requestBody, "&");
 
-        String email = formData.getOrDefault("email", "");
-        String password = formData.getOrDefault("user-password", "");
+        String email = formData.getOrDefault("email", "").trim();
+        String password = formData.getOrDefault("user-password", "").trim();
+
+        if (email.isEmpty() || password.isEmpty()) {
+            redirect303(exchange, "/loginFailed");
+            return;
+        }
 
         Optional<Map<String, String>> userOptional = findUserByEmail(email);
         if (userOptional.isPresent() && userOptional.get().get("password").equals(password)) {
@@ -98,9 +103,14 @@ public class AuthHandler extends Handler  {
         String requestBody = getBody(exchange);
         Map<String, String> formData = Utils.parseUrlEncoded(requestBody, "&");
 
-        String fullName = formData.getOrDefault("fullName", "");
-        String email = formData.getOrDefault("email", "");
-        String password = formData.getOrDefault("password", "");
+        String fullName = formData.getOrDefault("fullName", "").trim();
+        String email = formData.getOrDefault("email", "").trim();
+        String password = formData.getOrDefault("password", "").trim();
+
+        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            redirect303(exchange, "/registerFailed");
+            return;
+        }
 
         if (isUserExists(email)) {
             redirect303(exchange, "/registerFailed");
