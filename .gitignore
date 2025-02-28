@@ -1,6 +1,4 @@
 /.idea/
-/lesson44.iml
-/AttractorHttpServer.iml
 /out/
-/BookLander.iml
 /coverage-error.log
+.*iml
