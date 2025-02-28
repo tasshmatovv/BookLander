@@ -1,88 +1,102 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books</title>
+    <title>Книги - BookLander</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f8f9fa;
+            background-color: white;
+            color: black;
         }
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
-            background-color: #fff;
-        }
-        .book-section {
+        .container {
+            max-width: 1200px;
+            margin: auto;
             padding: 40px 20px;
         }
-       .book-card {
-          width: 100%;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          align-items: center;
+        .navbar {
+            background-color: #F8F8F8;
         }
-        .book-card img {
-            width: 100%;
-            height: 500px;
+        .navbar-brand, .nav-link {
+            color: black;
         }
-        .author-section {
+        .nav-link.btn {
+            background-color: #F8F8F8;
+            color: black;
+        }
+        .nav-link.btn:hover {
+            background-color: #ccc;
+        }
+        .section {
+            padding: 40px 20px;
             text-align: center;
-            padding: 50px 20px;
-            background: #fff;
+            border-radius: 10px;
         }
-        .nav-item{
-            margin-right:10px
+        .card {
+            background-color: #F8F8F8;
+            color: black;
+            border: none;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+        .btn-custom {
+            background-color: #fff;
+            color: black;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #ccc;
         }
     </style>
 </head>
 <body>
-<body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="/books">BookLander</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="/">BookLander</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="/employees">Сотрудники</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/books">Книги</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/profile">Профиль</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="/login">Войти</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link btn btn-primary text-white" href="/register">Регистрация</a>
-                </li>
+                <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
+                <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
+                <li class="nav-item"><a class="nav-link btn" href="/login">Войти</a></li>
+                <li class="nav-item"><a class="nav-link btn" href="/register">Регистрация</a></li>
             </ul>
         </div>
     </div>
 </nav>
 
+<div class="container section">
+    <h1>Книги</h1>
+    <p>Просматривайте и управляйте вашими любимыми книгами.</p>
+</div>
 
-<div class="container book-section">
+<div class="container">
     <div class="row">
         <#list books as book>
         <div class="col-md-4">
-            <div class="book-card">
-                <img src="${book.cover}" alt="${book.name}" class="book-cover">
+            <div class="card">
+                <img src="${book.cover}" alt="${book.name}">
                 <h5><a href="/book">${book.name}</a></h5>
-                <p>Author: ${book.author}</p>
+                <p>Автор: ${book.author}</p>
                 <p class="text-primary">${book.status}</p>
             </div>
         </div>
     </#list>
+</div>
 </div>
 </body>
 </html>
