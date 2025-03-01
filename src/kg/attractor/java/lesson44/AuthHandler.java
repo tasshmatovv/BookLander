@@ -14,6 +14,7 @@ import java.util.*;
 
 public class AuthHandler extends Handler  {
     private static final String FILE_PATH = "data/jsonFiles/Employee.json";
+    private static final Map<String, String> sessionStorage = new HashMap<>();
 
     public AuthHandler(String host, int port) throws IOException {
         super(host, port);
@@ -60,6 +61,7 @@ public class AuthHandler extends Handler  {
 
         Optional<Map<String, String>> userOptional = findUserByEmail(email);
         if (userOptional.isPresent() && userOptional.get().get("password").equals(password)) {
+            setSession(exchange, email);
             redirect303(exchange, "/profile");
         } else {
             redirect303(exchange, "/loginFailed");
@@ -74,14 +76,14 @@ public class AuthHandler extends Handler  {
                 .findFirst();
     }
 
-
     private String getUserEmailFromSession(HttpExchange exchange) {
         List<String> cookies = exchange.getRequestHeaders().getOrDefault("Cookie", Collections.emptyList());
         for (String cookie : cookies) {
             String[] parts = cookie.split("; ");
             for (String part : parts) {
                 if (part.startsWith("session=")) {
-                    return part.substring("session=".length());
+                    String sessionId = part.substring("session=".length());
+                    return sessionStorage.get(sessionId);
                 }
             }
         }
@@ -143,4 +145,12 @@ public class AuthHandler extends Handler  {
         Path path = makeFilePath("templates/registerFailed.ftlh");
         sendFile(exchange, path, ContentType.TEXT_HTML);
     }
+
+    private void setSession(HttpExchange exchange, String userEmail) {
+        String sessionId = UUID.randomUUID().toString();
+        sessionStorage.put(sessionId, userEmail);
+        String cookie = "session=" + sessionId + "; Path=/; HttpOnly; Max-Age=600";
+        exchange.getResponseHeaders().add("Set-Cookie", cookie);
+    }
+
 }
