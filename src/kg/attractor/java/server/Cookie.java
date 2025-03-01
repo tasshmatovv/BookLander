@@ -1,5 +1,8 @@
 package kg.attractor.java.server;
 
+import kg.attractor.java.common.Utils;
+
+import java.util.Map;
 import java.util.Objects;
 
 public class Cookie<V> {
@@ -31,4 +34,8 @@ public class Cookie<V> {
   private Integer getMaxAge() { return maxAge; }
   private String getName() { return name; }
   private boolean isHttpOnly() { return httpOnly; }
+
+  public static Map<String, String> parse(String cookieString) {
+    return Utils.parseUrlEncoded(cookieString, ";");
+  }
 }
