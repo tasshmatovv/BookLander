@@ -31,14 +31,15 @@ public class AuthHandler extends Handler  {
     }
 
     private void logoutPost(HttpExchange exchange) {
-        clearSessionCookie(exchange);
+        exchange.getRequestHeaders().getOrDefault("Cookie", Collections.emptyList()).stream()
+                .flatMap(cookie -> Arrays.stream(cookie.split("; ")))
+                .filter(part -> part.startsWith("session="))
+                .map(part -> part.substring("session=".length()))
+                .findFirst()
+                .ifPresent(sessionStorage::remove);
+        Headers headers = exchange.getResponseHeaders();
+        headers.add("Set-Cookie", "session=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT");
         redirect303(exchange, "/");
-    }
-
-    private void clearSessionCookie(HttpExchange exchange) {
-        Cookie<String> sessionCookie = new Cookie<>("session", "");
-        sessionCookie.setMaxAge(0);
-        setCookie(exchange, sessionCookie);
     }
 
     protected void setCookie(HttpExchange exchange, Cookie cookie) {
