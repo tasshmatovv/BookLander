@@ -60,6 +60,8 @@ public class AuthHandler extends Handler  {
 
         Optional<Map<String, String>> userOptional = findUserByEmail(email);
         if (userOptional.isPresent() && userOptional.get().get("password").equals(password)) {
+            String sessionCookie = "session=" + email + "; Path=/; HttpOnly";
+            exchange.getResponseHeaders().add("Set-Cookie", sessionCookie);
             redirect303(exchange, "/profile");
         } else {
             redirect303(exchange, "/loginFailed");
