@@ -70,7 +70,11 @@
                 <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
                 <li class="nav-item"><a class="nav-link btn" href="/login">Войти</a></li>
                 <li class="nav-item"><a class="nav-link btn" href="/register">Регистрация</a></li>
-                <li class="nav-item"><a class="nav-link btn" href="/logout">Выйти</a></li>
+                <li class="nav-item">
+                    <form action="/logout" method="post">
+                        <button class="nav-link btn" type="submit">Выйти</button>
+                    </form>
+                </li>
             </ul>
         </div>
     </div>
