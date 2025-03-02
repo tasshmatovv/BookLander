@@ -1,11 +1,13 @@
 package kg.attractor.java.lesson44;
 
 import com.google.gson.reflect.TypeToken;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 
 import kg.attractor.java.dataModels.Employee;
 import kg.attractor.java.server.ContentType;
+import kg.attractor.java.server.Cookie;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -25,7 +27,25 @@ public class AuthHandler extends Handler  {
         registerGet("/register", this::registerGet);
         registerPost("/register", this::registerPost);
         registerGet("/registerFailed", this::registerFailedGet);
+        registerPost("/logout", this::logoutPost);
     }
+
+    private void logoutPost(HttpExchange exchange) {
+        clearSessionCookie(exchange);
+        redirect303(exchange, "/");
+    }
+
+    private void clearSessionCookie(HttpExchange exchange) {
+        Cookie<String> sessionCookie = new Cookie<>("session", "");
+        sessionCookie.setMaxAge(0);
+        setCookie(exchange, sessionCookie);
+    }
+
+    protected void setCookie(HttpExchange exchange, Cookie cookie) {
+        Headers headers = exchange.getResponseHeaders();
+        headers.add("Set-Cookie", cookie.toString());
+    }
+
     private void loginGet(HttpExchange exchange) {
         Path path = makeFilePath("templates/index.html");
         sendFile(exchange, path, ContentType.TEXT_HTML);
