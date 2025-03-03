@@ -67,7 +67,7 @@
 <div class="container section">
     <p>Выберите книгу из списка и нажмите "Взять".</p>
 
-    <form>
+    <form action="/getBook" method="post">
         <div class="form-group">
             <select class="form-control" id="bookSelect">
                 <option selected disabled>Выберите книгу...</option>
