@@ -16,7 +16,6 @@ import java.util.*;
 
 public class AuthHandler extends Handler  {
     private static final String FILE_PATH = "data/jsonFiles/Employee.json";
-    private static final Map<String, String> sessionStorage = new HashMap<>();
 
     public AuthHandler(String host, int port) throws IOException {
         super(host, port);
@@ -97,19 +96,6 @@ public class AuthHandler extends Handler  {
                 .findFirst();
     }
 
-    private String getUserEmailFromSession(HttpExchange exchange) {
-        List<String> cookies = exchange.getRequestHeaders().getOrDefault("Cookie", Collections.emptyList());
-        for (String cookie : cookies) {
-            String[] parts = cookie.split("; ");
-            for (String part : parts) {
-                if (part.startsWith("session=")) {
-                    String sessionId = part.substring("session=".length());
-                    return sessionStorage.get(sessionId);
-                }
-            }
-        }
-        return null;
-    }
 
     private void registerGet(HttpExchange exchange) {
         Path path =  makeFilePath("templates/register.ftlh");

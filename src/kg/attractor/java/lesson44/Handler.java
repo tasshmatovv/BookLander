@@ -10,14 +10,18 @@ import kg.attractor.java.server.ContentType;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static kg.attractor.java.lesson44.AuthHandler.sessionStorage;
 
 public class Handler extends Lesson44Server{
 
     private List<Book> books;
     protected static List<Employee> employees;
+    protected static final Map<String, String> sessionStorage = new HashMap<>();
 
     public Handler(String host, int port) throws IOException {
         super(host, port);
@@ -36,9 +40,15 @@ public class Handler extends Lesson44Server{
 
     }
 
-    private void getBookPage(HttpExchange exchange){
-        Path path = makeFilePath("templates/getBookPage.ftlh");
-        sendFile(exchange, path, ContentType.TEXT_HTML);
+    private void getBookPage(HttpExchange exchange) {
+        String userEmail = getUserEmailFromSession(exchange);
+        if (userEmail != null) {
+            Map<String, Object> dataModel = new HashMap<>();
+            dataModel.put("email", userEmail);
+            renderTemplate(exchange, "/getBookPage.ftlh", dataModel);
+        } else {
+            redirect303(exchange, "/login");
+        }
     }
 
     private void singleEmployeeHandler(HttpExchange exchange) {
@@ -80,5 +90,19 @@ public class Handler extends Lesson44Server{
         Map<String ,Object> dataModel = new HashMap<>();
         dataModel.put("employee",employee);
         return dataModel;
+    }
+
+    protected String getUserEmailFromSession(HttpExchange exchange) {
+        List<String> cookies = exchange.getRequestHeaders().getOrDefault("Cookie", Collections.emptyList());
+        for (String cookie : cookies) {
+            String[] parts = cookie.split("; ");
+            for (String part : parts) {
+                if (part.startsWith("session=")) {
+                    String sessionId = part.substring("session=".length());
+                    return sessionStorage.get(sessionId);
+                }
+            }
+        }
+        return null;
     }
 }
