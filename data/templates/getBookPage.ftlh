@@ -71,10 +71,9 @@
         <div class="form-group">
             <select class="form-control" id="bookSelect">
                 <option selected disabled>Выберите книгу...</option>
-                <option>Книга 1</option>
-                <option>Книга 2</option>
-                <option>Книга 3</option>
-                <option>Книга 4</option>
+                <#list books as book>
+                <option value="${book.id}">${book.name}</option>
+            </#list>
             </select>
         </div>
 

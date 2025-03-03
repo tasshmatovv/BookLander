@@ -5,17 +5,14 @@ import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 import kg.attractor.java.dataModels.Book;
 import kg.attractor.java.dataModels.Employee;
-import kg.attractor.java.server.ContentType;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static kg.attractor.java.lesson44.AuthHandler.sessionStorage;
 
 public class Handler extends Lesson44Server{
 
@@ -43,9 +40,9 @@ public class Handler extends Lesson44Server{
     private void getBookPage(HttpExchange exchange) {
         String userEmail = getUserEmailFromSession(exchange);
         if (userEmail != null) {
-            Map<String, Object> dataModel = new HashMap<>();
+            Map<String, Object> dataModel = getBooksDataModel();
             dataModel.put("email", userEmail);
-            renderTemplate(exchange, "/getBookPage.ftlh", dataModel);
+            renderTemplate(exchange, "getBookPage.ftlh", dataModel);
         } else {
             redirect303(exchange, "/login");
         }
