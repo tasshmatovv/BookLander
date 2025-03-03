@@ -59,12 +59,23 @@ public class AuthHandler extends Handler  {
     private void profileGet(HttpExchange exchange) {
         String userEmail = getUserEmailFromSession(exchange);
         if (userEmail != null) {
-            Map<String, Object> dataModel = new HashMap<>();
-            dataModel.put("email", userEmail);
-            renderTemplate(exchange, "/profile.ftlh", dataModel);
-        } else {
-            redirect303(exchange, "/login");
+            Employee employee = employees.stream()
+                    .filter(e -> e.getEmail().equals(userEmail))
+                    .findFirst()
+                    .orElse(null);
+
+            if (employee != null) {
+                Map<String, Object> dataModel = new HashMap<>();
+                dataModel.put("fullName", employee.getFullName());
+                dataModel.put("email", userEmail);
+                dataModel.put("currentBooks", getBookNamesByIds(employee.getListCurrentBooks()));
+                dataModel.put("pastBooks", getBookNamesByIds(employee.getListPastBooks()));
+
+                renderTemplate(exchange, "/profile.ftlh", dataModel);
+                return;
+            }
         }
+        redirect303(exchange, "/login");
     }
 
     private void loginPost(HttpExchange exchange) {

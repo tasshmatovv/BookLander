@@ -10,10 +10,7 @@ import kg.attractor.java.server.ContentType;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class Handler extends Lesson44Server{
@@ -129,11 +126,15 @@ public class Handler extends Lesson44Server{
         return null;
     }
 
-    private List<String> getBookNamesByIds(List<Integer> bookIds) {
-        return books.stream()
-                .filter(book -> bookIds.contains(book.getId()))
-                .map(Book::getName)
-                .toList();
+    public List<String> getBookNamesByIds(List<Integer> bookIds) {
+        List<String> bookNames = new ArrayList<>();
+        for (Integer id : bookIds) {
+            books.stream()
+                    .filter(book -> book.getId() == id)
+                    .findFirst()
+                    .ifPresent(book -> bookNames.add(book.getName()));
+        }
+        return bookNames;
     }
 
 

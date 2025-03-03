@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="ru">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,14 +14,14 @@
             background-color: #F8F8F8;
         }
         .navbar-brand, .nav-link {
-            color:  black;
+            color: black;
         }
         .nav-link.btn {
-            background-color:  #F8F8F8;
+            background-color: #F8F8F8;
             color: black;
         }
         .nav-link.btn:hover {
-            background-color:  #F8F8F8;
+            background-color: #F8F8F8;
         }
         .container {
             max-width: 600px;
@@ -30,15 +29,15 @@
             padding: 40px 20px;
         }
         .card {
-            background-color:  #F8F8F8;
+            background-color: #F8F8F8;
             color: black;
             border: none;
             border-radius: 10px;
             padding: 20px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
-
 <body>
 <nav class="navbar navbar-expand-lg">
     <div class="container">
@@ -64,12 +63,43 @@
 </nav>
 
 <div class="container">
-    <div class="card">
-        <div class="card-body text-center">
+    <div class="card text-center">
+        <div class="card-body">
             <h1 class="card-title">Профиль пользователя</h1>
-            <p class="card-text">Email: ${email}</p>
+            <p class="card-text"><strong>Имя:</strong> ${fullName}</p>
+            <p class="card-text"><strong>Email:</strong> ${email}</p>
         </div>
     </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h2 class="card-title">Текущие книги</h2>
+            <ul>
+                <#if currentBooks?size == 0>
+                <p>Нет текущих книг</p>
+                <#else>
+                <#list currentBooks as book>
+                <li>${book}</li>
+            </#list>
+        </#if>
+        </ul>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h2 class="card-title">Прошлые книги</h2>
+        <ul>
+            <#if pastBooks?size == 0>
+            <p>Нет прошлых книг</p>
+            <#else>
+            <#list pastBooks as book>
+            <li>${book}</li>
+        </#list>
+    </#if>
+    </ul>
+</div>
+</div>
 </div>
 </body>
 </html>
