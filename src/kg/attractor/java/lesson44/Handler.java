@@ -5,9 +5,11 @@ import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 import kg.attractor.java.dataModels.Book;
 import kg.attractor.java.dataModels.Employee;
+import kg.attractor.java.server.ContentType;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +32,13 @@ public class Handler extends Lesson44Server{
         registerGet("/employee", this::singleEmployeeHandler);
         registerGet("/book",this::singleBookHandler);
 
+        registerGet("/getBook", this:: getBookPage);
 
+    }
+
+    private void getBookPage(HttpExchange exchange){
+        Path path = makeFilePath("templates/getBookPage.ftlh");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
     private void singleEmployeeHandler(HttpExchange exchange) {
