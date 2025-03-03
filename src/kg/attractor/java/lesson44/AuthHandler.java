@@ -72,27 +72,36 @@ public class AuthHandler extends Handler  {
         Map<String, String> formData = Utils.parseUrlEncoded(requestBody, "&");
 
         String email = formData.getOrDefault("email", "").trim();
-        String password = formData.getOrDefault("user-password", "").trim();
+        String password = formData.getOrDefault("password", "").trim();
 
         if (email.isEmpty() || password.isEmpty()) {
             redirect303(exchange, "/loginFailed");
             return;
         }
 
-        Optional<Map<String, String>> userOptional = findUserByEmail(email);
-        if (userOptional.isPresent() && userOptional.get().get("password").equals(password)) {
-            setSession(exchange, email);
-            redirect303(exchange, "/profile");
+        Optional<Employee> userOptional = findUserByEmail(email);
+        if (userOptional.isPresent()) {
+            Employee user = userOptional.get();
+            if (user.getPassword().equals(password)) {
+                setSession(exchange, email);
+                redirect303(exchange, "/profile");
+            } else {
+                redirect303(exchange, "/loginFailed");
+            }
         } else {
             redirect303(exchange, "/loginFailed");
         }
     }
 
-    private Optional<Map<String, String>> findUserByEmail(String email) {
-        Type userListType = new TypeToken<List<Map<String, String>>>() {}.getType();
-        List<Map<String, String>> users = Utils.readFile("data/jsonFiles/Employee.json", userListType);
+
+    private Optional<Employee> findUserByEmail(String email) {
+        Type userListType = new TypeToken<List<Employee>>() {}.getType();
+        List<Employee> users = Utils.readFile(FILE_PATH, userListType);
+        if (users == null) {
+            return Optional.empty();
+        }
         return users.stream()
-                .filter(user -> user.get("email").equals(email))
+                .filter(user -> user.getEmail().equals(email))
                 .findFirst();
     }
 
@@ -123,14 +132,14 @@ public class AuthHandler extends Handler  {
         }
     }
 
-    private boolean isUserExists(String email) {
-        Type userListType = new TypeToken<List<Map<String, String>>>() {}.getType();
-        List<Map<String, String>> users = Utils.readFile("data/jsonFiles/Employee.json", userListType);
+    public static boolean isUserExists(String email) {
+        Type userListType = new TypeToken<List<Employee>>() {}.getType();
+        List<Employee> users = Utils.readFile(FILE_PATH, userListType);
         if (users == null) {
             return false;
         }
-        return users.stream()
-                .anyMatch(user -> user.get("email").equals(email));
+        boolean exists = users.stream().anyMatch(user -> user.getEmail().equals(email));
+        return exists;
     }
 
     public static void saveUser(String email, String fullName, String password) {
@@ -140,12 +149,9 @@ public class AuthHandler extends Handler  {
             users = new ArrayList<>();
         }
         int newId = users.stream().mapToInt(Employee::getId).max().orElse(0) + 1;
-        Employee newUser = new Employee(newId, fullName, new ArrayList<>(), new ArrayList<>(), email, password);
+        Employee newUser = new Employee(newId, fullName, null, null, email, password);
         users.add(newUser);
         Utils.writeFile(FILE_PATH, users);
-        if (Handler.employees != null) {
-            Handler.employees.add(newUser);
-        }
     }
 
     private void registerFailedGet(HttpExchange exchange) {
