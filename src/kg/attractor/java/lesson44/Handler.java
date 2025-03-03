@@ -40,12 +40,21 @@ public class Handler extends Lesson44Server{
     private void getBookPage(HttpExchange exchange) {
         String userEmail = getUserEmailFromSession(exchange);
         if (userEmail != null) {
-            Map<String, Object> dataModel = getBooksDataModel();
+            Map<String, Object> dataModel = getFreeBooksName();
             dataModel.put("email", userEmail);
             renderTemplate(exchange, "getBookPage.ftlh", dataModel);
         } else {
             redirect303(exchange, "/login");
         }
+    }
+
+    private Map<String, Object> getFreeBooksName() {
+        Map<String, Object> dataModel = new HashMap<>();
+        List<Book> freeBooks = books.stream()
+                .filter(book -> "free".equalsIgnoreCase(book.getStatus()))
+                .toList();
+        dataModel.put("books", freeBooks);
+        return dataModel;
     }
 
     private void singleEmployeeHandler(HttpExchange exchange) {
