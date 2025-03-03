@@ -63,12 +63,10 @@
             text-decoration: none;
             transition: color 0.3s ease-in-out;
         }
-
         .book-link:hover {
             color: green;
             text-decoration: none;
         }
-
     </style>
 </head>
 <body>
@@ -112,6 +110,9 @@
             </div>
         </div>
     </#list>
+</div>
+<div class="text-center mt-4">
+    <a href="/getBook" class="nav-link btn">Взять книгу</a>
 </div>
 </div>
 </body>
