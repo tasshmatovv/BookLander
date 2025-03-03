@@ -140,7 +140,7 @@ public class AuthHandler extends Handler  {
             users = new ArrayList<>();
         }
         int newId = users.stream().mapToInt(Employee::getId).max().orElse(0) + 1;
-        Employee newUser = new Employee(newId, fullName, 0, 0, email, password);
+        Employee newUser = new Employee(newId, fullName, new ArrayList<>(), new ArrayList<>(), email, password);
         users.add(newUser);
         Utils.writeFile(FILE_PATH, users);
         if (Handler.employees != null) {

@@ -2,32 +2,32 @@
   {
     "id": 1,
     "fullName": "Дмитрий Сергеевич",
-    "listCurrentBooks": 5,
-    "listPastBooks": 1,
+    "listCurrentBooks": [5],
+    "listPastBooks": [1],
     "email" : "dima@gmail.com",
     "password" : "dima"
   },
   {
     "id": 2,
     "fullName": "Василий Георгеевич",
-    "listCurrentBooks": 4,
-    "listPastBooks": 2,
+    "listCurrentBooks": [4],
+    "listPastBooks": [2],
     "email" : "vasya@gmail.com",
     "password" : "vasya"
   },
   {
     "id": 3,
     "fullName": "Иванов Иван",
-    "listCurrentBooks": 3,
-    "listPastBooks": 1,
+    "listCurrentBooks": [3],
+    "listPastBooks": [1],
     "email" : "ivan@gmail.com",
     "password" : "ivan"
   },
   {
     "id": 4,
     "fullName": "Петров Петр",
-    "listCurrentBooks": 2,
-    "listPastBooks": 5,
+    "listCurrentBooks": [2],
+    "listPastBooks": [5],
     "email" : "petr@gmail.com",
     "password" : "petr"
   }

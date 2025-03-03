@@ -36,8 +36,8 @@
     <div class="employeeInfo">
         <h2>Employee Information</h2>
         <p class="info-item"><strong>Name:</strong>${employee.fullName}</p>
-        <p class="info-item"><strong>Current Books:</strong>${employee.listCurrentBooks}</p>
-        <p class="info-item"><strong>Past Books:</strong>${employee.listPastBooks}</p>
+        <p class="info-item"><strong>Current Books:</strong><#list currentBooks as book>${book}<#if book?has_next>, </#if></#list></p>
+        <p class="info-item"><strong>Past Books:</strong><#list pastBooks as book>${book}<#if book?has_next>, </#if></#list></p>
         <a href="/employees" class="btn btn-custom mt-3">Назад</a>
     </div>
 </div>

@@ -58,7 +58,11 @@ public class Handler extends Lesson44Server{
     }
 
     private void singleEmployeeHandler(HttpExchange exchange) {
-        renderTemplate(exchange,"employee.ftlh", getSingleEmployeeDataModel(employees.get(0)));
+        Employee employee = employees.get(0);
+        Map<String, Object> dataModel = getSingleEmployeeDataModel(employee);
+        dataModel.put("currentBooks", getBookNamesByIds(employee.getListCurrentBooks()));
+        dataModel.put("pastBooks", getBookNamesByIds(employee.getListPastBooks()));
+        renderTemplate(exchange, "employee.ftlh", dataModel);
     }
 
     private void singleBookHandler(HttpExchange exchange) {
@@ -74,9 +78,17 @@ public class Handler extends Lesson44Server{
         renderTemplate(exchange,"employees.ftlh", getEmployeesdataModel());
     }
 
-    private Map<String , Object> getEmployeesdataModel() {
-        Map<String,Object> dataModel = new HashMap<>();
-        dataModel.put("employees", employees);
+    private Map<String, Object> getEmployeesdataModel() {
+        Map<String, Object> dataModel = new HashMap<>();
+        List<Map<String, Object>> employeesWithBooks = employees.stream().map(employee -> {
+            Map<String, Object> empData = new HashMap<>();
+            empData.put("fullName", employee.getFullName());
+            empData.put("currentBooks", getBookNamesByIds(employee.getListCurrentBooks()));
+            empData.put("pastBooks", getBookNamesByIds(employee.getListPastBooks()));
+            return empData;
+        }).toList();
+
+        dataModel.put("employees", employeesWithBooks);
         return dataModel;
     }
 
@@ -111,4 +123,12 @@ public class Handler extends Lesson44Server{
         }
         return null;
     }
+
+    private List<String> getBookNamesByIds(List<Integer> bookIds) {
+        return books.stream()
+                .filter(book -> bookIds.contains(book.getId()))
+                .map(Book::getName)
+                .toList();
+    }
+
 }

@@ -86,9 +86,9 @@
         <#list employees as employee>
         <div class="card">
             <p><a href="/employee" class="employee-link"><strong>ФИО:</strong> ${employee.fullName}</a></p>
-            <p><strong>Текущие книги:</strong> ${employee.listCurrentBooks}</p>
-            <p><strong>Прошлые книги:</strong> ${employee.listPastBooks}</p>
-        </div>
+            <p><strong>Текущие книги:</strong> <#list employee.currentBooks as book>${book}<#if book_has_next>, </#if></#list></p>
+            <p><strong>Прошлые книги:</strong> <#list employee.pastBooks as book>${book}<#if book_has_next>, </#if></#list></p>
+    </div>
     </#list>
 </div>
 </div>
