@@ -5,9 +5,11 @@ import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 import kg.attractor.java.dataModels.Book;
 import kg.attractor.java.dataModels.Employee;
+import kg.attractor.java.server.ContentType;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.nio.file.Path;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -35,6 +37,8 @@ public class Handler extends Lesson44Server{
 
         registerGet("/getBook", this:: getBookPage);
         registerPost("/getBook", this::getBookPost);
+
+        registerGet("/errorPage", this:: getErrorPage);
 
     }
 
@@ -134,42 +138,40 @@ public class Handler extends Lesson44Server{
 
 
     private void getBookPost(HttpExchange exchange) {
-        String userEmail = getUserEmailFromSession(exchange);
-        if (userEmail == null) {
-            redirect303(exchange, "/login");
-            return;
-        }
-
         Map<String, String> formData = Utils.parseFormData(exchange);
-        if (!formData.containsKey("id")) {
+        String bookIdStr = formData.get("id");
+
+        if (bookIdStr == null) {
             return;
         }
 
-        int bookId = Integer.parseInt(formData.get("id"));
+        int bookId = Integer.parseInt(bookIdStr);
 
         Employee employee = employees.stream()
-                .filter(e -> e.getEmail().equals(userEmail))
+                .filter(e -> e.getEmail().equals(getUserEmailFromSession(exchange)))
                 .findFirst()
                 .orElse(null);
 
-        if (employee == null) {
+        if (employee == null || employee.getListCurrentBooks().size() >= 2) {
+            redirect303(exchange, "/errorPage");
             return;
         }
 
-        Book book = books.stream()
-                .filter(b -> b.getId() == bookId && "Free".equalsIgnoreCase(b.getStatus()))
-                .findFirst()
-                .orElse(null);
+        books.forEach(book -> {
+            if (book.getId() == bookId) {
+                book.setStatus("Busy");
+                employee.getListCurrentBooks().add(bookId);
+            }
+        });
 
-        if (book == null) {
-            return;
-        }
-
-        employee.getListCurrentBooks().add(bookId);
-        book.setStatus("Busy");
         Utils.writeFile("data/jsonFiles/Employee.json", employees);
         Utils.writeFile("data/jsonFiles/Book.json", books);
         redirect303(exchange, "/employees");
+    }
+
+    private void getErrorPage(HttpExchange exchange) {
+        Path path = makeFilePath("templates/errorPage.ftlh");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
 }
