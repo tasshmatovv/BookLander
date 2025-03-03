@@ -69,7 +69,7 @@
 
     <form action="/getBook" method="post">
         <div class="form-group">
-            <select class="form-control" id="bookSelect">
+            <select class="form-control" id="bookSelect" name="id">
                 <option selected disabled>Выберите книгу...</option>
                 <#list books as book>
                 <option value="${book.id}">${book.name}</option>

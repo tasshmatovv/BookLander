@@ -2,8 +2,11 @@ package kg.attractor.java.common;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.net.httpserver.HttpExchange;
+import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.net.URLDecoder;
 import java.nio.charset.Charset;
@@ -59,6 +62,22 @@ public class Utils {
             writer.flush();
         } catch (IOException e) {
             System.err.println("Ошибка при записи в файл: " + e.getMessage());
+        }
+    }
+
+    public static Map<String, String> parseFormData(HttpExchange exchange) {
+        try {
+            InputStreamReader isr = new InputStreamReader(exchange.getRequestBody(), StandardCharsets.UTF_8);
+            BufferedReader br = new BufferedReader(isr);
+            String formData = br.readLine();
+
+            if (formData == null || formData.isEmpty()) {
+                return Map.of();
+            }
+
+            return parseUrlEncoded(formData, "&");
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при разборе данных формы", e);
         }
     }
 }

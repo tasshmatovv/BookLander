@@ -34,6 +34,7 @@ public class Handler extends Lesson44Server{
         registerGet("/book",this::singleBookHandler);
 
         registerGet("/getBook", this:: getBookPage);
+        registerPost("/getBook", this::getBookPost);
 
     }
 
@@ -129,6 +130,46 @@ public class Handler extends Lesson44Server{
                 .filter(book -> bookIds.contains(book.getId()))
                 .map(Book::getName)
                 .toList();
+    }
+
+
+    private void getBookPost(HttpExchange exchange) {
+        String userEmail = getUserEmailFromSession(exchange);
+        if (userEmail == null) {
+            redirect303(exchange, "/login");
+            return;
+        }
+
+        Map<String, String> formData = Utils.parseFormData(exchange);
+        if (!formData.containsKey("id")) {
+            return;
+        }
+
+        int bookId = Integer.parseInt(formData.get("id"));
+
+        Employee employee = employees.stream()
+                .filter(e -> e.getEmail().equals(userEmail))
+                .findFirst()
+                .orElse(null);
+
+        if (employee == null) {
+            return;
+        }
+
+        Book book = books.stream()
+                .filter(b -> b.getId() == bookId && "Free".equalsIgnoreCase(b.getStatus()))
+                .findFirst()
+                .orElse(null);
+
+        if (book == null) {
+            return;
+        }
+
+        employee.getListCurrentBooks().add(bookId);
+        book.setStatus("Busy");
+        Utils.writeFile("data/jsonFiles/Employee.json", employees);
+        Utils.writeFile("data/jsonFiles/Book.json", books);
+        redirect303(exchange, "/employees");
     }
 
 }
