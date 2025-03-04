@@ -25,7 +25,6 @@ public class AuthHandler extends Handler  {
         registerGet("/loginFailed", this::loginFailedGet);
         registerGet("/register", this::registerGet);
         registerPost("/register", this::registerPost);
-        registerGet("/registerFailed", this::registerFailedGet);
         registerPost("/logout", this::logoutPost);
     }
 
@@ -189,10 +188,6 @@ public class AuthHandler extends Handler  {
         employees = users;
     }
 
-    private void registerFailedGet(HttpExchange exchange) {
-        Path path = makeFilePath("templates/registerFailed.ftlh");
-        sendFile(exchange, path, ContentType.TEXT_HTML);
-    }
 
     private void setSession(HttpExchange exchange, String userEmail) {
         String sessionId = UUID.randomUUID().toString();
