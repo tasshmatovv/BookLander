@@ -16,7 +16,7 @@
                 <div class="card-body">
                     <h1 class="card-title text-center">Ошибка!</h1>
                     <p class="card-text text-center">Авторизация не удалась. Неверный адрес электронной почты или пароль.</p>
-                    <p class="text-center"><a href="/" class="btn btn-primary">Вернуться на страницу входа</a></p>
+                    <p class="text-center"><a href="/login" class="btn btn-primary">Вернуться на страницу входа</a></p>
                 </div>
             </div>
         </div>
