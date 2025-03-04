@@ -94,25 +94,31 @@
     <h2>Регистрация</h2>
 
     <form action="/register" method="post">
-    <div class="input-group">
+        <div class="input-group">
             <label for="fullName">Имя</label>
             <input type="text" id="fullName" name="fullName" placeholder="Введите ваше имя">
-                <p class="error-message">${errorFullName}</p>
+            <#if errorFullName??>
+            <p class="error-message">${errorFullName}</p>
+            </#if>
         </div>
 
         <div class="input-group">
             <label for="email">Почта</label>
             <input type="email" id="email" name="email" placeholder="Введите вашу почту">
+            <#if errorEmail??>
             <p class="error-message">${errorEmail}</p>
+        </#if>
         </div>
 
         <div class="input-group">
             <label for="password">Пароль</label>
             <input type="password" id="password" name="password" placeholder="Введите ваш пароль">
+            <#if errorPassword??>
             <p class="error-message">${errorPassword}</p>
+        </#if>
         </div>
 
-        <button type="submit" class="button">Зарегистрироваться</button>
+    <button type="submit" class="button">Зарегистрироваться</button>
     </form>
 
     <div class="link">

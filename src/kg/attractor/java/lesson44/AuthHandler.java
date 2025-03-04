@@ -118,8 +118,7 @@ public class AuthHandler extends Handler  {
 
 
     private void registerGet(HttpExchange exchange) {
-        Path path =  makeFilePath("templates/register.ftlh");
-        sendFile(exchange,path,ContentType.TEXT_HTML);
+        renderTemplate(exchange, "register.ftlh", new HashMap<>());
     }
 
     private void registerPost(HttpExchange exchange) {
@@ -157,7 +156,7 @@ public class AuthHandler extends Handler  {
         }
 
         if (hasError) {
-            renderTemplate(exchange, "/register.ftlh", dataModel);
+            renderTemplate(exchange, "register.ftlh", dataModel);
             return;
         }
 
