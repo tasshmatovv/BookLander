@@ -67,8 +67,7 @@
             </#list>
             <#else>
             <option disabled selected>У вас нет взятых книг</option>
-        </
-        #if>
+        </#if>
         </select>
 </div>
 <button type="submit" class="btn btn-primary">Подтвердить</button>
