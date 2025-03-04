@@ -2,33 +2,66 @@
   {
     "id": 1,
     "fullName": "Дмитрий Сергеевич",
-    "listCurrentBooks": [5],
-    "listPastBooks": [1],
-    "email" : "dima@gmail.com",
-    "password" : "dima"
+    "listCurrentBooks": [
+      0
+    ],
+    "listPastBooks": [
+      0
+    ],
+    "email": "dima@gmail.com",
+    "password": "dima"
   },
   {
     "id": 2,
     "fullName": "Василий Георгеевич",
-    "listCurrentBooks": [4],
-    "listPastBooks": [2],
-    "email" : "vasya@gmail.com",
-    "password" : "vasya"
+    "listCurrentBooks": [
+      0
+    ],
+    "listPastBooks": [
+      0
+    ],
+    "email": "vasya@gmail.com",
+    "password": "vasya"
   },
   {
     "id": 3,
     "fullName": "Иванов Иван",
-    "listCurrentBooks": [3],
-    "listPastBooks": [1],
-    "email" : "ivan@gmail.com",
-    "password" : "ivan"
+    "listCurrentBooks": [
+      0
+    ],
+    "listPastBooks": [
+      0
+    ],
+    "email": "ivan@gmail.com",
+    "password": "ivan"
   },
   {
     "id": 4,
     "fullName": "Петров Петр",
-    "listCurrentBooks": [2],
-    "listPastBooks": [5],
-    "email" : "petr@gmail.com",
-    "password" : "petr"
+    "listCurrentBooks": [
+      0
+    ],
+    "listPastBooks": [
+      0
+    ],
+    "email": "petr@gmail.com",
+    "password": "petr"
+  },
+  {
+    "id": 5,
+    "fullName": "Эржан Ташматов",
+    "listCurrentBooks": [
+      0
+    ],
+    "listPastBooks": [
+      0,
+      1,
+      4,
+      3,
+      5,
+      2
+    ],
+    "email": "tasmatoverzan05@gmail.com",
+    "password": "йцуйцу"
   }
 ]
