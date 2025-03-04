@@ -50,12 +50,15 @@
                 <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
                 <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
                 <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
-                <li class="nav-item"><a class="nav-link btn" href="/login">Войти</a></li>
-                <li class="nav-item"><a class="nav-link btn" href="/register">Регистрация</a></li>
                 <li class="nav-item">
+                    <#if email??>
                     <form action="/logout" method="post">
                         <button class="nav-link btn" type="submit">Выйти</button>
                     </form>
+                    <#else>
+                    <a class="nav-link btn" href="/login">Войти</a>
+                    <a class="nav-link btn" href="/register">Регистрация</a>
+                </#if>
                 </li>
             </ul>
         </div>

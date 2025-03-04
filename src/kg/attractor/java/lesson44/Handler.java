@@ -147,11 +147,21 @@ public class Handler extends Lesson44Server{
 
 
     private void freemarkerBooksHandler(HttpExchange exchange) {
-        renderTemplate(exchange, "books.ftlh", getBooksDataModel());
+        Map<String, Object> dataModel = getBooksDataModel();
+        String userEmail = getUserEmailFromSession(exchange);
+        if (userEmail != null) {
+            dataModel.put("email", userEmail);
+        }
+        renderTemplate(exchange, "books.ftlh", dataModel);
     }
 
-    private void freemarkerEmployeesHandler(HttpExchange exchange){
-        renderTemplate(exchange,"employees.ftlh", getEmployeesdataModel());
+    private void freemarkerEmployeesHandler(HttpExchange exchange) {
+        Map<String, Object> dataModel = getEmployeesdataModel();
+        String userEmail = getUserEmailFromSession(exchange);
+        if (userEmail != null) {
+            dataModel.put("email", userEmail);
+        }
+        renderTemplate(exchange, "employees.ftlh", dataModel);
     }
 
     private Map<String, Object> getEmployeesdataModel() {
