@@ -69,17 +69,19 @@ public class Handler extends Lesson44Server{
         }
 
         Book bookToReturn = books.stream()
-                .filter(book -> book.getId() == bookId && employee.getListCurrentBooks().contains(book.getId()))
+                .filter(book -> book.getId() == bookId)
                 .findFirst()
                 .orElse(null);
 
-        if (bookToReturn == null) {
+        if (bookToReturn == null || !employee.getListCurrentBooks().contains(bookId)) {
             redirect303(exchange, "/errorPage");
             return;
         }
 
-        employee.getListCurrentBooks().remove((Integer) bookToReturn.getId());
-        employee.getListPastBooks().add(bookToReturn.getId());
+        employee.getListCurrentBooks().remove((Integer) bookId);
+        if (!employee.getListPastBooks().contains(bookId)) {
+            employee.getListPastBooks().add(bookId);
+        }
         bookToReturn.setStatus("Free");
 
         Utils.writeFile("data/jsonFiles/Employee.json", employees);
@@ -100,9 +102,10 @@ public class Handler extends Lesson44Server{
                 Map<String, Object> dataModel = new HashMap<>();
                 dataModel.put("fullName", employee.getFullName());
                 dataModel.put("email", userEmail);
-                dataModel.put("currentBooks", books.stream()
+                List<Book> currentBooks = books.stream()
                         .filter(book -> employee.getListCurrentBooks().contains(book.getId()))
-                        .toList());
+                        .toList();
+                dataModel.put("currentBooks", currentBooks);
                 renderTemplate(exchange, "/returnBookPage.ftlh", dataModel);
                 return;
             }
@@ -224,15 +227,18 @@ public class Handler extends Lesson44Server{
                 .findFirst()
                 .orElse(null);
 
-        if (employee == null || employee.getListCurrentBooks().size() >= 2) {
+        if (employee == null || employee.getListCurrentBooks().size() >= 3) {
             redirect303(exchange, "/errorPage");
             return;
+        }
+
+        if (!employee.getListCurrentBooks().contains(bookId)) {
+            employee.getListCurrentBooks().add(bookId);
         }
 
         books.forEach(book -> {
             if (book.getId() == bookId) {
                 book.setStatus("Busy");
-                employee.getListCurrentBooks().add(bookId);
             }
         });
 

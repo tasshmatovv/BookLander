@@ -160,9 +160,12 @@ public class AuthHandler extends Handler  {
             users = new ArrayList<>();
         }
         int newId = users.stream().mapToInt(Employee::getId).max().orElse(0) + 1;
-        Employee newUser = new Employee(newId, fullName, null, null, email, password);
+        List<Integer> defaultBooks = new ArrayList<>();
+        defaultBooks.add(0);
+        Employee newUser = new Employee(newId, fullName, defaultBooks, defaultBooks, email, password);
         users.add(newUser);
         Utils.writeFile(FILE_PATH, users);
+        employees = users;
     }
 
     private void registerFailedGet(HttpExchange exchange) {
