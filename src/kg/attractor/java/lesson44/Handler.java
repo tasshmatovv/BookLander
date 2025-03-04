@@ -42,8 +42,25 @@ public class Handler extends Lesson44Server{
     }
 
     private void getReturnBookPage(HttpExchange exchange) {
-        Path path = makeFilePath("templates/returnBookPage.ftlh");
-        sendFile(exchange, path, ContentType.TEXT_HTML);
+        String userEmail = getUserEmailFromSession(exchange);
+        if (userEmail != null) {
+            Employee employee = employees.stream()
+                    .filter(e -> e.getEmail().equals(userEmail))
+                    .findFirst()
+                    .orElse(null);
+
+            if (employee != null) {
+                Map<String, Object> dataModel = new HashMap<>();
+                dataModel.put("fullName", employee.getFullName());
+                dataModel.put("email", userEmail);
+                dataModel.put("currentBooks", books.stream()
+                        .filter(book -> employee.getListCurrentBooks().contains(book.getId()))
+                        .toList());
+                renderTemplate(exchange, "/returnBookPage.ftlh", dataModel);
+                return;
+            }
+        }
+        redirect303(exchange, "/login");
     }
 
     private void getBookPage(HttpExchange exchange) {
