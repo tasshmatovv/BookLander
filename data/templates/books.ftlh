@@ -107,7 +107,7 @@
         <div class="col-md-4">
             <div class="card">
                 <img src="${book.cover}" alt="${book.name}">
-                <h5><a href="/book" class="book-link">${book.name}</a></h5>
+                <h5><a href="/book?id=${book.id}" class="book-link">${book.name}</a></h5>
                 <p>Автор: ${book.author}</p>
                 <p class="text-primary">${book.status}</p>
             </div>

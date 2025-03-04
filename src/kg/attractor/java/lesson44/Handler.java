@@ -142,7 +142,33 @@ public class Handler extends Lesson44Server{
     }
 
     private void singleBookHandler(HttpExchange exchange) {
-        renderTemplate(exchange, "book.ftlh", getSingleBookDataModel(books.get(0)));
+        String query = exchange.getRequestURI().getQuery();
+        Map<String, String> params = Utils.parseUrlEncoded(query, "&");
+
+        if (!params.containsKey("id")) {
+            redirect303(exchange, "/books");
+            return;
+        }
+
+        int bookId;
+        try {
+            bookId = Integer.parseInt(params.get("id"));
+        } catch (NumberFormatException e) {
+            redirect303(exchange, "/books");
+            return;
+        }
+
+        Book book = books.stream()
+                .filter(b -> b.getId() == bookId)
+                .findFirst()
+                .orElse(null);
+
+        if (book == null) {
+            redirect303(exchange, "/books");
+            return;
+        }
+
+        renderTemplate(exchange, "book.ftlh", getSingleBookDataModel(book));
     }
 
 
