@@ -3,12 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Профиль пользователя</title>
+    <title>Выбор книги - BookLander</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: white;
             color: black;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 40px 20px;
         }
         .navbar {
             background-color: #F8F8F8;
@@ -21,27 +27,14 @@
             color: black;
         }
         .nav-link.btn:hover {
-            background-color: #F8F8F8;
-        }
-        .container {
-            max-width: 600px;
-            margin: auto;
-            padding: 40px 20px;
-        }
-        .card {
-            background-color: #F8F8F8;
-            color: black;
-            border: none;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
+            background-color: #ccc;
         }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg">
     <div class="container">
-        <a class="navbar-brand" href="/books">BookLander</a>
+        <a class="navbar-brand" href="/">BookLander</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -62,48 +55,23 @@
     </div>
 </nav>
 
-<div class="container">
-    <div class="card text-center">
-        <div class="card-body">
-            <h1 class="card-title">Профиль пользователя</h1>
-            <p class="card-text"><strong>Имя:</strong> ${fullName}</p>
-            <p class="card-text"><strong>Email:</strong> ${email}</p>
+<div class="container text-center">
+    <h2>Выберите книгу</h2>
+    <form>
+        <div class="form-group">
+            <select class="form-control" id="bookSelect">
+                <option value="">Выберите книгу</option>
+                <option value="book1">Книга 1</option>
+                <option value="book2">Книга 2</option>
+                <option value="book3">Книга 3</option>
+            </select>
         </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title">Текущие книги</h2>
-            <ul>
-                <#if currentBooks?size == 0>
-                <p>Нет текущих книг</p>
-                <#else>
-                <#list currentBooks as book>
-                <li>${book}</li>
-            </#list>
-        </#if>
-        </ul>
+        <button type="submit" class="btn btn-primary">Подтвердить</button>
+    </form>
+    <div class="mt-3">
+        <a href="/books" class="btn btn-secondary">Вернуться</a>
     </div>
 </div>
 
-<div class="card">
-    <div class="card-body">
-        <h2 class="card-title">Прошлые книги</h2>
-        <ul>
-            <#if pastBooks?size == 0>
-            <p>Нет прошлых книг</p>
-            <#else>
-            <#list pastBooks as book>
-            <li>${book}</li>
-        </#list>
-    </#if>
-    </ul>
-</div>
-</div>
-
-<div class="text-center">
-    <a href="/returnBook" class="btn btn-primary">Вернуть книгу</a>
-</div>
-</div>
 </body>
 </html>

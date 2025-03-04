@@ -37,6 +37,13 @@ public class Handler extends Lesson44Server{
 
         registerGet("/errorPage", this:: getErrorPage);
 
+        registerGet("/returnBook", this:: getReturnBookPage);
+
+    }
+
+    private void getReturnBookPage(HttpExchange exchange) {
+        Path path = makeFilePath("templates/returnBookPage.ftlh");
+        sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
     private void getBookPage(HttpExchange exchange) {
