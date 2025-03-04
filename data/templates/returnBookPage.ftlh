@@ -57,20 +57,25 @@
 
 <div class="container text-center">
     <h2>Выберите книгу</h2>
-    <form>
+    <form action="/returnBook" method="post">
         <div class="form-group">
-            <select class="form-control" id="bookSelect">
-                <option value="">Выберите книгу</option>
-                <option value="book1">Книга 1</option>
-                <option value="book2">Книга 2</option>
-                <option value="book3">Книга 3</option>
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Подтвердить</button>
-    </form>
-    <div class="mt-3">
-        <a href="/books" class="btn btn-secondary">Вернуться</a>
-    </div>
+            <label for="selectedBook">Выберите книгу:</label>
+            <select class="form-control" id="selectedBook" name="selectedBookId">
+                <#if currentBooks?? && currentBooks?size gt 0>
+                <#list currentBooks as book>
+                <option value="${book.id}">${book.name}</option>
+            </#list>
+            <#else>
+            <option disabled selected>У вас нет взятых книг</option>
+        </
+        #if>
+        </select>
+</div>
+<button type="submit" class="btn btn-primary">Подтвердить</button>
+</form>
+<div class="mt-3">
+    <a href="/books" class="btn btn-secondary">Вернуться</a>
+</div>
 </div>
 
 </body>
