@@ -38,7 +38,54 @@ public class Handler extends Lesson44Server{
         registerGet("/errorPage", this:: getErrorPage);
 
         registerGet("/returnBook", this:: getReturnBookPage);
+        registerPost("/returnBook", this::returnBookPost);
+    }
 
+    private void returnBookPost(HttpExchange exchange) {
+        Map<String, String> formData = Utils.parseFormData(exchange);
+        String bookIdStr = formData.get("selectedBookId");
+
+        if (bookIdStr == null) {
+            redirect303(exchange, "/errorPage");
+            return;
+        }
+
+        int bookId;
+        try {
+            bookId = Integer.parseInt(bookIdStr);
+        } catch (NumberFormatException e) {
+            redirect303(exchange, "/errorPage");
+            return;
+        }
+
+        Employee employee = employees.stream()
+                .filter(e -> e.getEmail().equals(getUserEmailFromSession(exchange)))
+                .findFirst()
+                .orElse(null);
+
+        if (employee == null) {
+            redirect303(exchange, "/login");
+            return;
+        }
+
+        Book bookToReturn = books.stream()
+                .filter(book -> book.getId() == bookId && employee.getListCurrentBooks().contains(book.getId()))
+                .findFirst()
+                .orElse(null);
+
+        if (bookToReturn == null) {
+            redirect303(exchange, "/errorPage");
+            return;
+        }
+
+        employee.getListCurrentBooks().remove((Integer) bookToReturn.getId());
+        employee.getListPastBooks().add(bookToReturn.getId());
+        bookToReturn.setStatus("Free");
+
+        Utils.writeFile("data/jsonFiles/Employee.json", employees);
+        Utils.writeFile("data/jsonFiles/Book.json", books);
+
+        redirect303(exchange, "/profile");
     }
 
     private void getReturnBookPage(HttpExchange exchange) {
