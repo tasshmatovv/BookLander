@@ -130,17 +130,39 @@ public class AuthHandler extends Handler  {
         String email = formData.getOrDefault("email", "").trim();
         String password = formData.getOrDefault("password", "").trim();
 
-        if (fullName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            redirect303(exchange, "/registerFailed");
-            return;
+        Map<String, Object> dataModel = new HashMap<>();
+        dataModel.put("fullName", fullName);
+        dataModel.put("email", email);
+
+        boolean hasError = false;
+
+        if (fullName.isEmpty()) {
+            dataModel.put("errorFullName", "Поле 'Имя' не может быть пустым.");
+            hasError = true;
+        }
+
+        if (email.isEmpty() || !email.contains("@")) {
+            dataModel.put("errorEmail", "Введите корректную почту.");
+            hasError = true;
+        }
+
+        if (password.length() < 6) {
+            dataModel.put("errorPassword", "Пароль должен содержать минимум 6 символов.");
+            hasError = true;
         }
 
         if (isUserExists(email)) {
-            redirect303(exchange, "/registerFailed");
-        } else {
-            saveUser(email, fullName, password);
-            redirect303(exchange, "/login");
+            dataModel.put("errorEmail", "Пользователь с такой почтой уже существует.");
+            hasError = true;
         }
+
+        if (hasError) {
+            renderTemplate(exchange, "/register.ftlh", dataModel);
+            return;
+        }
+
+        saveUser(email, fullName, password);
+        redirect303(exchange, "/login");
     }
 
     public static boolean isUserExists(String email) {

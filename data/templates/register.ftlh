@@ -81,6 +81,11 @@
         .link a:hover {
             text-decoration: underline;
         }
+         .error-message {
+             color: red;
+             font-size: 12px;
+             margin-top: 5px;
+         }
     </style>
 </head>
 <body>
@@ -91,17 +96,20 @@
     <form action="/register" method="post">
     <div class="input-group">
             <label for="fullName">Имя</label>
-            <input type="text" id="fullName" name="fullName" placeholder="Введите ваше имя" required>
+            <input type="text" id="fullName" name="fullName" placeholder="Введите ваше имя">
+                <p class="error-message">${errorFullName}</p>
         </div>
 
         <div class="input-group">
             <label for="email">Почта</label>
-            <input type="email" id="email" name="email" placeholder="Введите вашу почту" required>
+            <input type="email" id="email" name="email" placeholder="Введите вашу почту">
+            <p class="error-message">${errorEmail}</p>
         </div>
 
         <div class="input-group">
             <label for="password">Пароль</label>
-            <input type="password" id="password" name="password" placeholder="Введите ваш пароль" required>
+            <input type="password" id="password" name="password" placeholder="Введите ваш пароль">
+            <p class="error-message">${errorPassword}</p>
         </div>
 
         <button type="submit" class="button">Зарегистрироваться</button>
