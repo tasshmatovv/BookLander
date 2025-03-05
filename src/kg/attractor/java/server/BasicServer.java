@@ -2,11 +2,12 @@ package kg.attractor.java.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -18,9 +19,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class BasicServer {
+    private final static Configuration freemarker = initFreeMarker();
 
     private final HttpServer server;
-    // путь к каталогу с файлами, которые будет отдавать сервер по запросам клиентов
     private final String dataDir = "data";
     private Map<String, RouteHandler> routes = new HashMap<>();
 
@@ -55,24 +56,12 @@ public abstract class BasicServer {
     }
 
     private void registerCommonHandlers() {
-        // самый основной обработчик, который будет определять
-        // какие обработчики вызывать в дальнейшем
-        server.createContext("/", this::handleIncomingServerRequests);
-
-        // специфичные обработчики, которые выполняют свои действия
-        // в зависимости от типа запроса
-
-        // обработчик для корневого запроса
-        // именно этот обработчик отвечает что отображать,
-        // когда пользователь запрашивает localhost:9889
+       server.createContext("/", this::handleIncomingServerRequests);
         registerGet("/", exchange -> sendFile(exchange, makeFilePath("/templates/welcomePage.ftlh"), ContentType.TEXT_HTML));
-
-        // эти обрабатывают запросы с указанными расширениями
         registerFileHandler(".css", ContentType.TEXT_CSS);
         registerFileHandler(".html", ContentType.TEXT_HTML);
         registerFileHandler(".jpg", ContentType.IMAGE_JPEG);
         registerFileHandler(".png", ContentType.IMAGE_PNG);
-
     }
 
     protected final void registerGet(String route, RouteHandler handler) {
@@ -183,6 +172,35 @@ public abstract class BasicServer {
             IOException e = var10;
             e.printStackTrace();
             return "";
+        }
+    }
+
+    private static Configuration initFreeMarker() {
+        try {
+            Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
+            cfg.setDirectoryForTemplateLoading(new File("data/templates"));
+            cfg.setDefaultEncoding("UTF-8");
+            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
+            cfg.setLogTemplateExceptions(false);
+            cfg.setWrapUncheckedExceptions(true);
+            cfg.setFallbackOnNullLoopVariable(false);
+            return cfg;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {
+        try {
+            Template temp = freemarker.getTemplate(templateFile);
+             try (OutputStreamWriter writer = new OutputStreamWriter(stream)) {
+                temp.process(dataModel, writer);
+                writer.flush();
+                var data = stream.toByteArray();
+                sendByteData(exchange, ResponseCodes.OK, ContentType.TEXT_HTML, data);
+            }
+        } catch (IOException | TemplateException e) {
+            e.printStackTrace();
         }
     }
 }
