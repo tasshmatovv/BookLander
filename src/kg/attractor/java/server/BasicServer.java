@@ -193,7 +193,8 @@ public abstract class BasicServer {
     protected void renderTemplate(HttpExchange exchange, String templateFile, Object dataModel) {
         try {
             Template temp = freemarker.getTemplate(templateFile);
-             try (OutputStreamWriter writer = new OutputStreamWriter(stream)) {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            try (OutputStreamWriter writer = new OutputStreamWriter(stream)) {
                 temp.process(dataModel, writer);
                 writer.flush();
                 var data = stream.toByteArray();
