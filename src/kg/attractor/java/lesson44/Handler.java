@@ -135,7 +135,34 @@ public class Handler extends BasicServer {
     }
 
     private void singleEmployeeHandler(HttpExchange exchange) {
-        Employee employee = employees.get(0);
+        String query = exchange.getRequestURI().getQuery();
+        if (query == null) {
+            redirect303(exchange, "/employees");
+            return;
+        }
+        Map<String, String> params = Utils.parseUrlEncoded(query, "&");
+        if (!params.containsKey("id")) {
+            redirect303(exchange, "/employees");
+            return;
+        }
+        int employeeId;
+        try {
+            employeeId = Integer.parseInt(params.get("id"));
+        } catch (NumberFormatException e) {
+            redirect303(exchange, "/employees");
+            return;
+        }
+        Employee employee = employees.stream()
+                .filter(e -> e.getId() == employeeId)
+                .findFirst()
+                .orElse(null);
+
+        if (employee == null) {
+            redirect303(exchange, "/employees");
+            return;
+        }
+
+
         Map<String, Object> dataModel = getSingleEmployeeDataModel(employee);
         dataModel.put("currentBooks", getBookNamesByIds(employee.getListCurrentBooks()));
         dataModel.put("pastBooks", getBookNamesByIds(employee.getListPastBooks()));
@@ -194,6 +221,7 @@ public class Handler extends BasicServer {
         Map<String, Object> dataModel = new HashMap<>();
         List<Map<String, Object>> employeesWithBooks = employees.stream().map(employee -> {
             Map<String, Object> empData = new HashMap<>();
+            empData.put("id", employee.getId());
             empData.put("fullName", employee.getFullName());
             empData.put("currentBooks", getBookNamesByIds(employee.getListCurrentBooks()));
             empData.put("pastBooks", getBookNamesByIds(employee.getListPastBooks()));
