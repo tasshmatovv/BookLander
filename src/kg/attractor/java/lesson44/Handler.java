@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 import kg.attractor.java.dataModels.Book;
 import kg.attractor.java.dataModels.Employee;
+import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 
 import java.io.IOException;
@@ -13,7 +14,7 @@ import java.nio.file.Path;
 import java.util.*;
 
 
-public class Handler extends Lesson44Server{
+public class Handler extends BasicServer {
 
     private List<Book> books;
     protected static List<Employee> employees;
@@ -171,7 +172,6 @@ public class Handler extends Lesson44Server{
         renderTemplate(exchange, "book.ftlh", getSingleBookDataModel(book));
     }
 
-
     private void freemarkerBooksHandler(HttpExchange exchange) {
         Map<String, Object> dataModel = getBooksDataModel();
         String userEmail = getUserEmailFromSession(exchange);
@@ -246,7 +246,6 @@ public class Handler extends Lesson44Server{
         }
         return bookNames;
     }
-
 
     private void getBookPost(HttpExchange exchange) {
         Map<String, String> formData = Utils.parseFormData(exchange);

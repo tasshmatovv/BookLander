@@ -7,7 +7,6 @@ import kg.attractor.java.common.Utils;
 
 import kg.attractor.java.dataModels.Employee;
 import kg.attractor.java.server.ContentType;
-import kg.attractor.java.server.Cookie;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -38,11 +37,6 @@ public class AuthHandler extends Handler  {
         Headers headers = exchange.getResponseHeaders();
         headers.add("Set-Cookie", "session=; Path=/; HttpOnly; Max-Age=0; Expires=Thu, 01 Jan 1970 00:00:00 GMT");
         redirect303(exchange, "/");
-    }
-
-    protected void setCookie(HttpExchange exchange, Cookie cookie) {
-        Headers headers = exchange.getResponseHeaders();
-        headers.add("Set-Cookie", cookie.toString());
     }
 
     private void loginGet(HttpExchange exchange) {
@@ -103,7 +97,6 @@ public class AuthHandler extends Handler  {
         }
     }
 
-
     private Optional<Employee> findUserByEmail(String email) {
         Type userListType = new TypeToken<List<Employee>>() {}.getType();
         List<Employee> users = Utils.readFile(FILE_PATH, userListType);
@@ -114,7 +107,6 @@ public class AuthHandler extends Handler  {
                 .filter(user -> user.getEmail().equals(email))
                 .findFirst();
     }
-
 
     private void registerGet(HttpExchange exchange) {
         renderTemplate(exchange, "register.ftlh", new HashMap<>());
@@ -187,7 +179,6 @@ public class AuthHandler extends Handler  {
         Utils.writeFile(FILE_PATH, users);
         employees = users;
     }
-
 
     private void setSession(HttpExchange exchange, String userEmail) {
         String sessionId = UUID.randomUUID().toString();
