@@ -12,7 +12,6 @@
     "employeeId": 2,
     "bookId": 3,
     "takeTime": "2025-02-28T14:15:00",
-    "returnedTime": null,
     "isReturned": false
   },
   {
@@ -28,7 +27,6 @@
     "employeeId": 4,
     "bookId": 2,
     "takeTime": "2025-03-03T11:30:00",
-    "returnedTime": null,
     "isReturned": false
   },
   {
@@ -36,7 +34,22 @@
     "employeeId": 5,
     "bookId": 4,
     "takeTime": "2025-03-02T16:00:00",
-    "returnedTime": null,
     "isReturned": false
+  },
+  {
+    "id": 6,
+    "employeeId": 1,
+    "bookId": 3,
+    "takeTime": "2025-03-06T14:26:10",
+    "returnedTime": "2025-03-06T14:26:23",
+    "isReturned": true
+  },
+  {
+    "id": 7,
+    "employeeId": 1,
+    "bookId": 3,
+    "takeTime": "2025-03-06T14:26:39",
+    "returnedTime": "2025-03-06T14:26:46",
+    "isReturned": true
   }
 ]
