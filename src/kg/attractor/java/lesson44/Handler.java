@@ -326,7 +326,7 @@ public class Handler extends BasicServer {
                 journalEntries = new ArrayList<>();
             }
 
-            List<Map<String, Object>> journalData = journalEntries.stream().map(entry -> {
+            List<Map<String, Object>> journalData = journalEntries.stream().filter(entry -> entry.isReturned()).map(entry -> {
                 Map<String, Object> data = new HashMap<>();
                 data.put("id", entry.getId());
 
