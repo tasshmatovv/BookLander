@@ -85,6 +85,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
+                <li class="nav-item"><a class="nav-link" href="/journal">Журнал</a></li>
                 <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
                 <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
                 <#if email??>
@@ -104,7 +105,6 @@
 
 <div class="container section">
     <h1>Журнал книг</h1>
-    <p>Просмотр истории взятия и возвращения книг</p>
 </div>
 
 <div class="container">
@@ -121,12 +121,14 @@
             <tbody>
             <#if journal?? && journal?size gt 0>
             <#list journal as entry>
+            <#if entry.isReturned>
             <tr>
                 <td>${entry.employeeName}</td>
                 <td>${entry.bookName}</td>
                 <td>${entry.takeTime}</td>
                 <td>${entry.returnedTime?default("Неизвестно")}</td>
             </tr>
+            </#if>
             </#list>
             <#else>
             <tr>

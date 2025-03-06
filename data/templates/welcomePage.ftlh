@@ -57,6 +57,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
+                <li class="nav-item"><a class="nav-link" href="/journal">Журнал</a></li>
                 <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
                 <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
                 <li class="nav-item"><a class="nav-link btn" href="/login">Войти</a></li>
