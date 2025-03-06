@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "employeeId": 1,
+    "bookId": 1,
+    "takeTime": "2025-03-01T10:00:00",
+    "returnedTime": "2025-03-05T15:30:00",
+    "isReturned": true
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "bookId": 3,
+    "takeTime": "2025-02-28T14:15:00",
+    "returnedTime": null,
+    "isReturned": false
+  },
+  {
+    "id": 3,
+    "employeeId": 3,
+    "bookId": 5,
+    "takeTime": "2025-02-25T09:45:00",
+    "returnedTime": "2025-02-27T17:20:00",
+    "isReturned": true
+  },
+  {
+    "id": 4,
+    "employeeId": 4,
+    "bookId": 2,
+    "takeTime": "2025-03-03T11:30:00",
+    "returnedTime": null,
+    "isReturned": false
+  },
+  {
+    "id": 5,
+    "employeeId": 5,
+    "bookId": 4,
+    "takeTime": "2025-03-02T16:00:00",
+    "returnedTime": null,
+    "isReturned": false
+  }
+]
