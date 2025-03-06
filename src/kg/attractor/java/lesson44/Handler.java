@@ -12,6 +12,8 @@ import kg.attractor.java.server.ContentType;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.nio.file.Path;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -88,6 +90,7 @@ public class Handler extends BasicServer {
         }
         bookToReturn.setStatus("Free");
 
+        updateJournalEntry(employee.getId(), bookId);
         Utils.writeFile("data/jsonFiles/Employee.json", employees);
         Utils.writeFile("data/jsonFiles/Book.json", books);
 
@@ -308,6 +311,7 @@ public class Handler extends BasicServer {
             }
         });
 
+        addJournalEntry(employee.getId(), bookId);
         Utils.writeFile("data/jsonFiles/Employee.json", employees);
         Utils.writeFile("data/jsonFiles/Book.json", books);
         redirect303(exchange, "/employees");
@@ -356,6 +360,57 @@ public class Handler extends BasicServer {
             dataModel.put("journal", journalData);
 
             renderTemplate(exchange, "journal.ftlh", dataModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void addJournalEntry(int employeeId, int bookId) {
+        try {
+            Type journalListType = new TypeToken<List<Journal>>() {}.getType();
+
+            List<Journal> journalEntries = Utils.readFile("data/jsonFiles/Journal.json", journalListType);
+            if (journalEntries == null) {
+                journalEntries = new ArrayList<>();
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            String takeTime = LocalDateTime.now().format(formatter);
+
+            Journal newEntry = new Journal(
+                    journalEntries.size() + 1,
+                    employeeId, bookId, takeTime,
+                    null,
+                    false
+            );
+
+            journalEntries.add(newEntry);
+
+            Utils.writeFile("data/jsonFiles/Journal.json", journalEntries);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void updateJournalEntry(int employeeId, int bookId) {
+        try {
+            Type journalListType = new TypeToken<List<Journal>>() {}.getType();
+
+            List<Journal> journalEntries = Utils.readFile("data/jsonFiles/Journal.json", journalListType);
+            if (journalEntries == null) {
+                journalEntries = new ArrayList<>();
+            }
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+            String returnedTime = LocalDateTime.now().format(formatter);
+
+            for (Journal entry : journalEntries) {
+                if (entry.getEmployeeId() == employeeId && entry.getBookId() == bookId && !entry.isReturned()) {
+                    entry.setReturnedTime(returnedTime);
+                    entry.setReturned(true);
+                    break;
+                }
+            }
+
+            Utils.writeFile("data/jsonFiles/Journal.json", journalEntries);
         } catch (Exception e) {
             e.printStackTrace();
         }
