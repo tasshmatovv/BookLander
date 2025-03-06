@@ -5,6 +5,7 @@ import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.common.Utils;
 import kg.attractor.java.dataModels.Book;
 import kg.attractor.java.dataModels.Employee;
+import kg.attractor.java.dataModels.Journal;
 import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 
@@ -40,6 +41,8 @@ public class Handler extends BasicServer {
 
         registerGet("/returnBook", this:: getReturnBookPage);
         registerPost("/returnBook", this::returnBookPost);
+
+        registerGet("/journal", this::getJournal);
     }
 
     private void returnBookPost(HttpExchange exchange) {
@@ -315,4 +318,46 @@ public class Handler extends BasicServer {
         sendFile(exchange, path, ContentType.TEXT_HTML);
     }
 
+    private void getJournal(HttpExchange exchange) {
+        try {
+            Type journalListType = new TypeToken<List<Journal>>() {}.getType();
+            List<Journal> journalEntries = Utils.readFile("data/jsonFiles/Journal.json", journalListType);
+            if (journalEntries == null) {
+                journalEntries = new ArrayList<>();
+            }
+
+            List<Map<String, Object>> journalData = journalEntries.stream().map(entry -> {
+                Map<String, Object> data = new HashMap<>();
+                data.put("id", entry.getId());
+
+                String employeeName = employees.stream()
+                        .filter(e -> e.getId() == entry.getEmployeeId())
+                        .map(Employee::getFullName)
+                        .findFirst()
+                        .orElse("Неизвестный сотрудник");
+
+                String bookName = books.stream()
+                        .filter(b -> b.getId() == entry.getBookId())
+                        .map(Book::getName)
+                        .findFirst()
+                        .orElse("Неизвестная книга");
+
+                data.put("employeeName", employeeName);
+                data.put("bookName", bookName);
+                data.put("takeTime", entry.getTakeTime());
+                data.put("returnedTime", entry.getReturnedTime());
+                data.put("isReturned", entry.isReturned());
+
+                return data;
+            }).toList();
+
+
+            Map<String, Object> dataModel = new HashMap<>();
+            dataModel.put("journal", journalData);
+
+            renderTemplate(exchange, "journal.ftlh", dataModel);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
