@@ -6,16 +6,103 @@
     <title>Login form</title>
     <link rel="stylesheet" href="../css/forms.css">
 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
     <style>
-    .registerLink a {
-       text-decoration: none;
-       color: black
-    }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            color: black;
+        }
+
+        .navbar {
+            background-color: #F8F8F8;
+        }
+
+        .navbar-brand, .nav-link {
+            color: black;
+        }
+
+        .nav-link.btn {
+            background-color: #F8F8F8;
+            color: black;
+        }
+
+        .nav-link.btn:hover {
+            background-color: #ccc;
+        }
+
+        .main-content {
+            margin-top: 60px;
+        }
+
+        .legend p {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .form-element {
+            margin-bottom: 20px;
+        }
+
+        .form-element input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .registerLink a {
+            text-decoration: none;
+            color: black;
+        }
+
+        .register-button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .register-button:hover {
+            background-color: #0056b3;
+        }
+
+        .hr-line {
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .details {
+            font-size: 14px;
+            color: #555;
+        }
+
     </style>
 </head>
 
 <body>
-<main>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">BookLander</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
+                <li class="nav-item"><a class="nav-link" href="/journal">Журнал</a></li>
+                <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
     <form action="/login" method="post">
         <fieldset>
             <div class="legend">

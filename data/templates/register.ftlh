@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Регистрация</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f7f6;
-            display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
@@ -20,7 +21,6 @@
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             padding: 20px;
-            width: 300px;
         }
 
         h2 {
@@ -81,14 +81,47 @@
         .link a:hover {
             text-decoration: underline;
         }
-         .error-message {
-             color: red;
-             font-size: 12px;
-             margin-top: 5px;
-         }
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .navbar {
+            background-color: #F8F8F8;
+        }
+
+        .navbar-brand, .nav-link {
+            color: black;
+        }
+
+        .nav-link.btn {
+            background-color: #F8F8F8;
+            color: black;
+        }
+
+        .nav-link.btn:hover {
+            background-color: #ccc;
+        }
     </style>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand" href="/">BookLander</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="/employees">Сотрудники</a></li>
+                <li class="nav-item"><a class="nav-link" href="/journal">Журнал</a></li>
+                <li class="nav-item"><a class="nav-link" href="/books">Книги</a></li>
+                <li class="nav-item"><a class="nav-link" href="/profile">Профиль</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container">
     <h2>Регистрация</h2>
